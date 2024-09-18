@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import jwt
 
 # Constants for JWT
@@ -20,9 +20,13 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = (
+            datetime.now(tz=timezone.utc) + expires_delta
+        )  # Use timezone-aware UTC datetime
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(tz=timezone.utc) + timedelta(
+            minutes=15
+        )  # Use timezone-aware UTC datetime
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -34,15 +38,14 @@ class Token(BaseModel):
     token_type: str
 
 
-# Endpoint to create a token
-@app.post("/token", response_model=Token)
-async def login():
-    # In a real-world application, you'd verify user credentials here
-
-    # Example user data to encode into the token
-    user_data = {"sub": "user@example.com"}
+# Manually create a token with a specific username (this can be removed in a production setup)
+@app.get("/create-token/{username}")
+async def create_user_token(username: str):
+    user_data = {"sub": username}
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data=user_data, expires_delta=access_token_expires)
+    access_token = create_access_token(
+        data=user_data, expires_delta=access_token_expires
+    )
 
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -70,6 +73,17 @@ def verify_token(token: str = Depends(oauth2_scheme)):
 @app.get("/users/me")
 async def read_users_me(username: str = Depends(verify_token)):
     return {"username": username}
+
+
+class RecommendInput(BaseModel):
+    abc: int  # Define the expected JSON structure
+
+
+@app.post("/recommend")
+async def recommend(input_data: RecommendInput):
+    # Example response or processing logic with the received data
+    response = {"message": f"Received abc value: {input_data.abc}"}
+    return response
 
 
 # Run the FastAPI app
