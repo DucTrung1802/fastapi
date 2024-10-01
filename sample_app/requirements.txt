@@ -1,0 +1,8 @@
+uvicorn
+fastapi
+pyjwt
+passlib[bcrypt]
+pydantic
+neo4j
+pandas
+python-multipart
