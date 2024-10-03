@@ -8,10 +8,12 @@ import os
 
 # Windows
 # Open Command Line
-# setx API_KEY="your_api_key"
+# setx API_KEY "your_api_key"
 
+# IMPORTANT: Restart IDE after set variables
 
 api_key = os.getenv("API_KEY")  # Fetch the API key from environment variables
+print(api_key)
 if api_key:
     print(api_key)
     print("API Key found!")
