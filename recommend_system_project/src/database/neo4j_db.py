@@ -7,11 +7,12 @@ class Neo4jConnection:
         self.driver = GraphDatabase.driver(uri, auth=(user, password))
 
         # Validate the connection
-        session = self.driver.session()
-        response = session.run("RETURN 1")
-        result = [record for record in response]
-        if len(result) < 1:
-            raise Exception("Neo4j connection is not established")
+        try:
+            session = self.driver.session()
+            response = session.run("RETURN 1")
+            result = [record for record in response]
+        except Exception as e:
+            raise Exception(e)
 
     def query(self, database: str, query: str, parameters: dict[str, t.Any] = None):
         session = None

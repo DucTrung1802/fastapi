@@ -1,19 +1,12 @@
-from fastapi import Depends, FastAPI
-from configuration import Configuration
-from database.neo4j_db import Neo4jConnection
+from fastapi import FastAPI
+
+from .user import user
 
 # from .dependencies import get_query_token, get_token_header
 
-configuration = Configuration()
+app = FastAPI()
 
-neo4j_username = configuration.get_environment_variale("NEO4J_USERNAME")
-neo4j_password = configuration.get_environment_variale("NEO4J_PASSWORD")
-neo4j_uri = "neo4j://localhost:7687"
-neo4j_target_database = "neo4j"
-
-neo4j_conn = Neo4jConnection(neo4j_uri, neo4j_username, neo4j_password)
-
-# app = FastAPI()
+app.include_router(user.router)
 
 
 # Run one of these in command line
