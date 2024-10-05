@@ -1,7 +1,7 @@
-import hashlib
+import bcrypt
 from password_validator import PasswordValidator
 
-hash_lib = hashlib.sha256()
+
 validator = PasswordValidator()
 
 # Define your password policy
@@ -12,15 +12,17 @@ validator.has().uppercase()  # Must have uppercase
 validator.has().digits()  # Must have digits
 
 
-def hash_string(input_string: str):
-    hash_lib = hashlib.sha256()
-    hash_lib.update(input_string.encode("utf-8"))
-    return hash_lib.hexdigest()
+def hash_password(raw_password: str):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(raw_password.encode("utf-8"), salt)
+    return hashed_password.decode("utf-8")
+
+
+def verify_password(stored_password: str, provided_password: str):
+    return bcrypt.checkpw(
+        provided_password.encode("utf-8"), stored_password.encode("utf-8")
+    )
 
 
 def validate_password(password: str):
     return validator.validate(password)
-
-
-if __name__ == "__main__":
-    print(hash_string("hello"))

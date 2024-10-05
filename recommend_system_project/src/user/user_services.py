@@ -32,7 +32,7 @@ async def create_user_service(input_data: NewUser) -> Response:
 
     # If patient does not exist, create new a patient
     if not patient:
-        input_data.password = hash_string(input_data.password)
+        input_data.password = hash_password(input_data.password)
         result = Patient(
             username=input_data.user_name, password=input_data.password
         ).create()
