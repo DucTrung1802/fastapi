@@ -1,30 +1,27 @@
-from fastapi import HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import HTTPException, status
+
 from .user_models import *
+from ..dependencies import timedelta, create_access_token
 from ..models import *
 from ..utils.utils import *
-from ..configurations import Configuration
-from ..database.neo4j_repository import initialize_neo4j
+from ..configurations import ACCESS_TOKEN_EXPIRE_MINUTES
 from ..database.neo4j_models import Patient
 from ..utils.enums import *
 
-# Initialize configuration
-config = Configuration()
-neo4j_config = config.get_neo4j_configuration()
 
-# Create a Neo4j connection using environment variables
-neo4j_connection = initialize_neo4j(
-    uri=neo4j_config["uri"],
-    user=neo4j_config["user"],
-    password=neo4j_config["password"],
-)
-
-
-async def create_user_service(input_data: NewUser) -> Response:
+async def create_user_service(input_data: CreateUserModel):
     # Validate input password
     if not validate_password(input_data.password):
         return Response(
             status=ResponseStatus.ERROR,
-            message="Password length must be between 8 to 20 characters, has lowercase, uppercase characters and numbers",
+            message="Password length must be between 8 to 20 characters, has lowercase, uppercase characters and numbers.",
+        ).model_dump(exclude={"data"})
+
+    if not is_validate_email(input_data.email):
+        return Response(
+            status=ResponseStatus.ERROR,
+            message="Email is invalid.",
         ).model_dump(exclude={"data"})
 
     # Check if the user_name already exists
@@ -34,12 +31,14 @@ async def create_user_service(input_data: NewUser) -> Response:
     if not patient:
         input_data.password = hash_password(input_data.password)
         result = Patient(
-            username=input_data.user_name, password=input_data.password
+            username=input_data.user_name,
+            password=input_data.password,
+            email=input_data.email,
         ).create()
 
         return Response(
             status=ResponseStatus.SUCCESS,
-            message="Patient created successfully",
+            message="Patient created successfully.",
             data={
                 "username": result.username,
             },
@@ -47,5 +46,41 @@ async def create_user_service(input_data: NewUser) -> Response:
 
     return Response(
         status=ResponseStatus.ERROR,
-        message="Patient already exists",
+        message="Patient already exists.",
     ).model_dump(exclude={"data"})
+
+
+async def login_service(input_data: OAuth2PasswordRequestForm):
+    # Check if user_name already exists
+    patient = Patient.match(input_data.username)
+
+    if patient:
+        # Verify password
+        if verify_password(
+            stored_password=patient.password, provided_password=input_data.password
+        ):
+            # Provide token
+            access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+            access_token = create_access_token(
+                data={"sub": input_data.username}, expires_delta=access_token_expires
+            )
+            token = Token(token_type="bearer", access_token=access_token)
+
+            return Response(
+                status=ResponseStatus.SUCCESS,
+                data={"token": token},
+            ).model_dump(exclude={"message"})
+
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect username or password",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )

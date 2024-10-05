@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Union
 from .utils.enums import *
 
 
@@ -8,7 +8,11 @@ class Token(BaseModel):
     access_token: str
 
 
+class TokenData(BaseModel):
+    username: Union[str, None] = None
+
+
 class Response(BaseModel):
     status: ResponseStatus
-    message: str
+    message: Optional[str] = None
     data: Optional[dict] = None

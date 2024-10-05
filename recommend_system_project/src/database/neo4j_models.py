@@ -27,6 +27,7 @@ class Patient(BaseNode):
     __primaryproperty__: ClassVar[str] = "username"
     username: str
     password: str
+    email: str
 
 
 class Profile(BaseNode):

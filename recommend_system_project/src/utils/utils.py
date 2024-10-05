@@ -1,6 +1,6 @@
 import bcrypt
 from password_validator import PasswordValidator
-
+from email_validator import validate_email, EmailNotValidError
 
 validator = PasswordValidator()
 
@@ -26,3 +26,11 @@ def verify_password(stored_password: str, provided_password: str):
 
 def validate_password(password: str):
     return validator.validate(password)
+
+
+def is_validate_email(email: str):
+    try:
+        valid = validate_email(email)
+        return True
+    except EmailNotValidError as e:
+        return False
