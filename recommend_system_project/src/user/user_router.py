@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from .services import *
-from .models import NewUser
+from .user_services import *
+from .user_models import NewUser
 
 router = APIRouter()
 

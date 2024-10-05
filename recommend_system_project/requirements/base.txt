@@ -9,3 +9,4 @@ neo4j
 pandas
 python-multipart
 neontology
+password-validator
