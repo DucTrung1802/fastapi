@@ -84,3 +84,10 @@ async def login_service(input_data: OAuth2PasswordRequestForm):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+
+async def get_secret_key_service():
+    return Response(
+        status=ResponseStatus.SUCCESS,
+        data={"secret_key": "hello world"},
+    ).model_dump(exclude={"message"})
