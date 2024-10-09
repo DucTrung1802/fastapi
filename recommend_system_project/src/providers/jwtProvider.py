@@ -13,5 +13,4 @@ def generate_token(data: dict, secret_key: str, token_life: timedelta):
 
 
 def verify_token(token: str, secret_key: str):
-    # TODO: Logic to verify token here
     return jwt.decode(token, secret_key, algorithms="HS256")
