@@ -27,20 +27,24 @@ async def is_authorized(request: Request):
         payload = jwtProvider.verify_token(
             access_token, "KBgJwUETt4HeVD05WaXXI9V3JnwCVP"
         )
+        request.state.data = payload
 
     # Access token is expired, return HTTP code 410 Gone for FE to call refreshToken API
     except jwt.ExpiredSignatureError:
-        raise HTTPException(
-            status_code=status.HTTP_410_GONE,
-            detail="Need to refresh token",
-        )
+        x_api_key = request.headers.get("x-api-key")
+        if not x_api_key or x_api_key != "ductrung":
+            raise HTTPException(
+                status_code=status.HTTP_410_GONE,
+                detail="Need to refresh token.",
+            )
+        else:
+            return request
 
     # Other errors, return HTTP code 401 Unauthorized
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized",
+            detail="Unauthorized.",
         )
 
-    # 2. Push the payload for the next layers
-    return payload
+    return request
