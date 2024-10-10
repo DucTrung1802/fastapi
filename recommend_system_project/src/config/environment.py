@@ -1,5 +1,10 @@
 import os
 
+# JWT credentials
 ACCESS_TOKEN_SECRET_KEY = os.getenv("ACCESS_TOKEN_SECRET_KEY")
 REFRESH_TOKEN_SECRET_KEY = os.getenv("REFRESH_TOKEN_SECRET_KEY")
 X_API_KEY = os.getenv("X_API_KEY")
+
+# NEO4J credentials
+NEO4J_DB_USERNAME = os.getenv("NEO4J_DB_USERNAME")
+NEO4J_DB_PASSWORD = os.getenv("NEO4J_DB_PASSWORD")

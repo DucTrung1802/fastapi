@@ -1,9 +1,15 @@
 from fastapi import FastAPI
 
+from .config import configuration, environment, neo4j_db
 from .routes import userRoute
 
-app = FastAPI()
+# neo4j_db.init_neontology(
+#     configuration.NEO4J_DB_URI,
+#     environment.NEO4J_DB_USERNAME,
+#     environment.NEO4J_DB_PASSWORD,
+# )
 
+app = FastAPI()
 
 app.include_router(userRoute.router)
 
