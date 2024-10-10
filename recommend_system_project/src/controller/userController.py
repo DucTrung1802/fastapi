@@ -88,5 +88,11 @@ async def login(request: OAuth2PasswordRequestForm):
     return response
 
 
-async def get_data(request):
-    return request
+async def logout(request):
+    # Clear cookies
+    response = JSONResponse(
+        content={"message": "Logout API success!"}, status_code=status.HTTP_200_OK
+    )
+    response.delete_cookie("access_token")
+    response.delete_cookie("refresh_token")
+    return response
