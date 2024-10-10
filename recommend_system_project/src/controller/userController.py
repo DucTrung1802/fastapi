@@ -1,8 +1,7 @@
-from datetime import timedelta
 from fastapi import HTTPException, Request, status
 from fastapi.responses import JSONResponse
-from fastapi.security import OAuth2PasswordRequestForm
 
+from ..config import environment, configuration
 from ..providers import jwtProvider
 from ..config import configuration
 from ..utils import enums
@@ -16,9 +15,6 @@ MOCK_DATABASE = {
         "password": "abcd1234",
     }
 }
-
-ACCESS_TOKEN_SECRET_KEY = "KBgJwUETt4HeVD05WaXXI9V3JnwCVP"
-REFRESH_TOKEN_SECRET_KEY = "fcCjhnpeopVn2Hg1jG75MUi62051yL"
 
 
 async def login(request):
@@ -39,14 +35,16 @@ async def login(request):
     }
 
     # Create access token and refresh token
-    access_token_lifetime = timedelta(seconds=5)
     access_token = jwtProvider.generate_token(
-        user_info, ACCESS_TOKEN_SECRET_KEY, access_token_lifetime
+        user_info,
+        environment.ACCESS_TOKEN_SECRET_KEY,
+        configuration.ACCESS_TOKEN_LIFETIME,
     )
 
-    refresh_token_lifetime = timedelta(days=7)
     refresh_token = jwtProvider.generate_token(
-        user_info, REFRESH_TOKEN_SECRET_KEY, refresh_token_lifetime
+        user_info,
+        environment.REFRESH_TOKEN_SECRET_KEY,
+        configuration.REFRESH_TOKEN_LIFETIME,
     )
 
     # USE ONE OF THESE: Local storage OR HTTP only cookie
@@ -73,7 +71,7 @@ async def login(request):
             httponly=True,
             secure=True,
             samesite=None,
-            max_age=refresh_token_lifetime.total_seconds() * 1000,
+            max_age=configuration.COOKIES_LIFETIME.total_seconds() * 1000,
         )
 
         response.set_cookie(
@@ -82,7 +80,7 @@ async def login(request):
             httponly=True,
             secure=True,
             samesite=None,
-            max_age=refresh_token_lifetime.total_seconds() * 1000,
+            max_age=configuration.COOKIES_LIFETIME.total_seconds() * 1000,
         )
 
     return response
@@ -114,13 +112,14 @@ async def refresh_token(request: Request):
     # Verify refresh token and get payload
     try:
         payload = jwtProvider.verify_token(
-            refresh_token, "fcCjhnpeopVn2Hg1jG75MUi62051yL"
+            refresh_token, environment.REFRESH_TOKEN_SECRET_KEY
         )
 
         # Create new access token
-        access_token_lifetime = timedelta(hours=1)
         access_token = jwtProvider.generate_token(
-            payload, ACCESS_TOKEN_SECRET_KEY, access_token_lifetime
+            payload,
+            environment.ACCESS_TOKEN_SECRET_KEY,
+            configuration.ACCESS_TOKEN_LIFETIME,
         )
 
         # Response: Local storage / HTTP only cookie for browser
@@ -146,7 +145,7 @@ async def refresh_token(request: Request):
                 httponly=True,
                 secure=True,
                 samesite=None,
-                max_age=timedelta(days=7).total_seconds() * 1000,
+                max_age=configuration.COOKIES_LIFETIME.total_seconds() * 1000,
             )
 
         return response

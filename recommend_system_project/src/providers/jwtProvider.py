@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
-
 import jwt
+
+from ..config import configuration
 
 
 def generate_token(data: dict, secret_key: str, token_life: timedelta):
@@ -9,8 +10,8 @@ def generate_token(data: dict, secret_key: str, token_life: timedelta):
     data_copy = data.copy()
     data_copy.update({"iat": issue_at_time, "exp": expiration_time})
 
-    return jwt.encode(data_copy, secret_key)
+    return jwt.encode(data_copy, secret_key, algorithm=configuration.JWT_ALGORITHM)
 
 
 def verify_token(token: str, secret_key: str):
-    return jwt.decode(token, secret_key, algorithms="HS256")
+    return jwt.decode(token, secret_key, algorithms=configuration.JWT_ALGORITHM)

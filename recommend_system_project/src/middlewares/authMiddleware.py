@@ -1,6 +1,7 @@
 from fastapi import Request, HTTPException, status
 import jwt
 
+from ..config import environment
 from ..providers import jwtProvider
 from ..config import configuration
 from ..utils import enums
@@ -25,14 +26,14 @@ async def is_authorized(request: Request):
     # Handle tokens
     try:
         payload = jwtProvider.verify_token(
-            access_token, "KBgJwUETt4HeVD05WaXXI9V3JnwCVP"
+            access_token, environment.ACCESS_TOKEN_SECRET_KEY
         )
         request.state.data = payload
 
     # Access token is expired, return HTTP code 410 Gone for FE to call refreshToken API
     except jwt.ExpiredSignatureError:
-        x_api_key = request.headers.get("x-api-key")
-        if not x_api_key or x_api_key != "ductrung":
+        x_api_key = request.headers.get(configuration.X_API_KEY_HEADER)
+        if not x_api_key or x_api_key != environment.X_API_KEY:
             raise HTTPException(
                 status_code=status.HTTP_410_GONE,
                 detail="Need to refresh token.",
