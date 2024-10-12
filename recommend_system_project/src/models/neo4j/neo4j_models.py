@@ -1,14 +1,15 @@
 from typing import ClassVar
 from neontology import BaseNode, BaseRelationship
+from pydantic import EmailStr
 
 
-# NODES
-class Patient(BaseNode):
-    __primarylabel__: ClassVar[str] = "Patient"
-    __primaryproperty__: ClassVar[str] = "username"
-    username: str
+# NODES with validation
+class User(BaseNode):
+    __primarylabel__: ClassVar[str] = "User"
+    __primaryproperty__: ClassVar[str] = "email"
+
+    email: EmailStr
     password: str
-    email: str
 
 
 class Profile(BaseNode):
@@ -23,7 +24,7 @@ class Name(BaseNode):
 # RELATIONSHIPS
 class HasProfile(BaseRelationship):
     __relationshiptype__: ClassVar[str] = "HasProfile"
-    source: Patient
+    source: User
     target: Profile
 
 
