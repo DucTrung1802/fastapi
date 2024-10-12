@@ -1,6 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, Request
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends
 
 from ..validation import userValidation
 from ..middlewares import authMiddleware

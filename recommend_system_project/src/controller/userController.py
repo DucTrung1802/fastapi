@@ -1,18 +1,19 @@
-from fastapi import HTTPException, Request, status
+from fastapi import Request
 from fastapi.responses import JSONResponse
 
 from ..services import userService
-from ..config import environment, configuration
-from ..providers import jwtProvider
 from ..config import configuration
-from ..utils import enums
 from ..models.userModels import *
+from ..utils.exceptions import GenericException
 
 TOKEN_LOCATION = configuration.TOKEN_LOCATION
 
 
 async def login(request: OAuth2EmailPasswordRequestForm):
-    return await userService.login(request)
+    try:
+        return await userService.login(request)
+    except:
+        raise GenericException(name="hello")
 
 
 async def logout(request):
