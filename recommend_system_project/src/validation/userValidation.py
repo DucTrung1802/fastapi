@@ -1,12 +1,13 @@
-from pydantic import ValidationError
+from password_validator import PasswordValidator
+from email_validator import validate_email
 
-from ..models.neo4j import neo4j_models
-from ..utils.exceptions import GenericException
+
+PASSWORD_VALIDATOR = PasswordValidator()
+PASSWORD_VALIDATOR.min(8)  # Minimum length 8
+PASSWORD_VALIDATOR.no().spaces()  # No spaces allowed
 
 
 async def validate_login(email: str, password: str):
-    try:
-        user = neo4j_models.User(email=email, password=password)
-        _ = user.model_dump()
-    except:
-        raise GenericException(name="validation")
+    valid_email = validate_email(email)
+    email = valid_email.email  # Extract the normalized email
+    password = PASSWORD_VALIDATOR.validate(password)
