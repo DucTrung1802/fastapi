@@ -1,6 +1,7 @@
 from typing import ClassVar
-from neontology import BaseNode, BaseRelationship
+
 from pydantic import EmailStr
+from neontology import BaseNode, BaseRelationship
 
 
 # NODES with validation

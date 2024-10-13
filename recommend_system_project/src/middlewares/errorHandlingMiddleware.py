@@ -1,26 +1,57 @@
-from fastapi import FastAPI, Request
+from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from typing import List, Tuple, Callable
-from email_validator import EmailNotValidError
+
+from ..utils.exceptions import *
 
 
-# Define the generic exception handler
-async def generic_exception_handler(request: Request, exception: Exception):
+# DEFINE THE BASIC EXCEPTION HANDLERS
+async def bad_request_handler(request: Request, exception: Exception):
+    # Add more handlers here
     return JSONResponse(
-        status_code=500,
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"message": f"Bad request."},
+    )
+
+
+async def unauthorized_exception_handler(request: Request, exception: Exception):
+    # Add more handlers here
+    return JSONResponse(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        content={"message": f"Unauthorized."},
+    )
+
+
+async def generic_exception_handler(request: Request, exception: Exception):
+    # Add more handlers here
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"message": f"Something went wrong."},
     )
 
 
-async def email_not_valid_error_handler(request: Request, exception: Exception):
+# DEFINE THE SPECIFIC EXCEPTION HANDLERS
+async def email_not_valid_exception_handler(request: Request, exception: Exception):
+    # Add more handlers here
     return JSONResponse(
-        status_code=400,
+        status_code=status.HTTP_400_BAD_REQUEST,
         content={"message": f"Email is not valid."},
+    )
+
+
+async def pass_not_valid_exception_handler(request: Request, exception: Exception):
+    # Add more handlers here
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"message": f"Password is not valid."},
     )
 
 
 # Exception - Exception Handler mappings
 ExceptionHandlerMapping: List[Tuple[type, Callable]] = [
     (Exception, generic_exception_handler),
-    (EmailNotValidError, email_not_valid_error_handler),
+    (BadRequestException, bad_request_handler),
+    (UnauthorizedException, unauthorized_exception_handler),
+    (EmailNotValidException, email_not_valid_exception_handler),
+    (PasswordNotValidException, pass_not_valid_exception_handler),
 ]

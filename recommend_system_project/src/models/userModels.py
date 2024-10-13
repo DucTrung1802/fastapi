@@ -1,6 +1,6 @@
+from fastapi import Form
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import EmailStr
-from fastapi import Form
 
 
 class OAuth2EmailPasswordRequestForm(OAuth2PasswordRequestForm):

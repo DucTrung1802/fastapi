@@ -1,26 +1,22 @@
-from fastapi import HTTPException, Request, status
+from fastapi import Request, status, HTTPException
 from fastapi.responses import JSONResponse
 
+from ..config import configuration, environment
 from ..models.neo4j import neo4j_models
-from ..config import environment, configuration
-from ..providers import jwtProvider
-from ..config import configuration
-from ..utils import enums
 from ..models.userModels import *
+from ..providers import jwtProvider
+from ..utils import enums
+from ..utils.exceptions import *
 
 TOKEN_LOCATION = configuration.TOKEN_LOCATION
 
 
 async def login(request: OAuth2EmailPasswordRequestForm):
-    unauthorized_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized."
-    )
-
     # Query email in database
     user = neo4j_models.User.match(pp=request.email)
 
     if not user:
-        raise unauthorized_exception
+        raise UnauthorizedException
 
     # Create payload to include in JWT token
     user_info = {
@@ -143,11 +139,8 @@ async def refresh_token(request: Request):
 
         return response
 
-    except Exception:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Refresh Token API failed.",
-        )
+    except:
+        raise BadRequestException
 
 
 async def get_data(request):

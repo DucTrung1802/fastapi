@@ -1,10 +1,11 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends
 
-from ..validation import userValidation
-from ..middlewares import authMiddleware
 from ..controller import userController
+from ..middlewares import authMiddleware
 from ..models.userModels import *
+from ..validation import userValidation
+
 
 router = APIRouter()
 
