@@ -12,6 +12,15 @@ router = APIRouter()
 TAG_NAME = "users"
 
 
+@router.post("/create_user", tags=[TAG_NAME])
+async def create_user(request: Annotated[User, Depends()]):
+    await userValidation.validate_create_user(
+        request.full_name, request.email, request.password
+    )
+
+    return await userController.create_user(request)
+
+
 @router.post("/login", tags=[TAG_NAME])
 async def login(request: Annotated[OAuth2EmailPasswordRequestForm, Depends()]):
     await userValidation.validate_login(request.email, request.password)

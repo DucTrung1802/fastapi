@@ -31,7 +31,19 @@ async def generic_exception_handler(request: Request, exception: Exception):
 
 
 # DEFINE THE SPECIFIC EXCEPTION HANDLERS
-async def email_not_valid_exception_handler(request: Request, exception: Exception):
+async def empty_string_exception_handler(
+    request: Request, exception: EmptyStringException
+):
+    # Add more handlers here
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"message": f"The field {exception.field_name} must not be empty."},
+    )
+
+
+async def email_not_valid_exception_handler(
+    request: Request, exception: EmailNotValidException
+):
     # Add more handlers here
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
@@ -39,7 +51,9 @@ async def email_not_valid_exception_handler(request: Request, exception: Excepti
     )
 
 
-async def pass_not_valid_exception_handler(request: Request, exception: Exception):
+async def password_not_valid_exception_handler(
+    request: Request, exception: PasswordNotValidException
+):
     # Add more handlers here
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
@@ -53,5 +67,5 @@ ExceptionHandlerMapping: List[Tuple[type, Callable]] = [
     (BadRequestException, bad_request_handler),
     (UnauthorizedException, unauthorized_exception_handler),
     (EmailNotValidException, email_not_valid_exception_handler),
-    (PasswordNotValidException, pass_not_valid_exception_handler),
+    (PasswordNotValidException, password_not_valid_exception_handler),
 ]

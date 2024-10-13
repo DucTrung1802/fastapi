@@ -8,6 +8,10 @@ from ..models.userModels import *
 TOKEN_LOCATION = configuration.TOKEN_LOCATION
 
 
+async def create_user(request: User):
+    return await userService.create_user(request)
+
+
 async def login(request: OAuth2EmailPasswordRequestForm):
     return await userService.login(request)
 

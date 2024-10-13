@@ -9,6 +9,7 @@ class User(BaseNode):
     __primarylabel__: ClassVar[str] = "User"
     __primaryproperty__: ClassVar[str] = "email"
 
+    full_name: str
     email: EmailStr
     password: str
 

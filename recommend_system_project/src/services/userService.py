@@ -11,6 +11,24 @@ from ..utils.exceptions import *
 TOKEN_LOCATION = configuration.TOKEN_LOCATION
 
 
+async def create_user(request: User):
+    # Query email in database
+    user = neo4j_models.User.match(pp=request.email)
+
+    # If user already exists, return message
+    if user:
+        return JSONResponse(content={"message": "User already exists."})
+
+    # Create new user
+    new_user = neo4j_models.User(
+        full_name=request.full_name, email=request.email, password=request.password
+    ).merge()
+
+    return JSONResponse(
+        content={"message": f"A new user was created with email '{request.email}'"}
+    )
+
+
 async def login(request: OAuth2EmailPasswordRequestForm):
     # Query email in database
     user = neo4j_models.User.match(pp=request.email)

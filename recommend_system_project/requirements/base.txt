@@ -10,3 +10,4 @@ pandas
 python-multipart
 neontology
 password-validator
+email-validator
