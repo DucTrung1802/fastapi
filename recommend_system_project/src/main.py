@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from .config import configuration, environment, neo4j_db
 from .routes import userRoute, recommendRoute
 from .middlewares.errorHandlingMiddleware import ExceptionHandlerMapping
+from .utils.logging import *
 
 neo4j_db.init_neontology(
     configuration.NEO4J_DB_URI,
@@ -10,7 +11,11 @@ neo4j_db.init_neontology(
     environment.NEO4J_DB_PASSWORD,
 )
 
+initialize_logging()
+
 app = FastAPI()
+
+log(log_level=LogLevel.INFO, message="hello world")
 
 # Routers
 app.include_router(userRoute.router)
@@ -23,5 +28,5 @@ for excection, excection_handler in ExceptionHandlerMapping:
     app.add_exception_handler(excection, excection_handler)
 
 # Run one of these in command line
-# uvicorn recommend_system_project.src.main:app
-# uvicorn recommend_system_project.src.main:app --host 0.0.0.0 --port 8000 --workers 4
+# uvicorn src.main:app --host 0.0.0.0 --port 8000 --workers 4 --log-config=log_conf.yaml
+# uvicorn src.main:app --log-config=log_conf.yaml

@@ -1,0 +1,150 @@
+2024-10-18 16:57:14,093 - asyncio - DEBUG - Using proactor: IocpProactor
+2024-10-18 16:57:14,932 - neo4j.pool - DEBUG - [#0000]  _: <POOL> created, routing address IPv4Address(('localhost', 7687))
+2024-10-18 16:57:14,933 - neo4j - DEBUG - [#0000]  _: <WORKSPACE> resolve home database
+2024-10-18 16:57:14,933 - neo4j.pool - DEBUG - [#0000]  _: <POOL> attempting to update routing table from IPv4Address(('localhost', 7687))
+2024-10-18 16:57:14,933 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-18 16:57:14,936 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-18 16:57:14,936 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-18 16:57:14,937 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-18 16:57:14,937 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-18 16:57:16,977 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-18 16:57:16,978 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-18 16:57:16,978 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-18 16:57:16,979 - neo4j.pool - DEBUG - [#0000]  _: <POOL> deactivating address ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-18 16:57:16,979 - neo4j.pool - DEBUG - [#0000]  _: <POOL> table={None: RoutingTable(database=None, routers={IPv4Address(('localhost', 7687))}, readers={}, writers={}, last_updated_time=403651.64, ttl=0)}
+2024-10-18 16:57:16,979 - neo4j.pool - DEBUG - [#0000]  _: <POOL> failed to fetch routing info from ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-18 16:57:16,979 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-18 16:57:16,980 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv4Address(('127.0.0.1', 7687))
+2024-10-18 16:57:16,980 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-18 16:57:16,980 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-18 16:57:16,986 - neo4j.io - DEBUG - [#DC1D]  C: <MAGIC> 0x6060B017
+2024-10-18 16:57:16,987 - neo4j.io - DEBUG - [#DC1D]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-18 16:57:16,990 - neo4j.io - DEBUG - [#DC1D]  S: <HANDSHAKE> 0x00000605
+2024-10-18 16:57:16,990 - neo4j.io - DEBUG - [#DC1D]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-18 16:57:16,991 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-18 16:57:16,991 - neo4j.io - DEBUG - [#DC1D]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-18 16:57:16,992 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-18 16:57:16,994 - neo4j.io - DEBUG - [#DC1D]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-96', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-18 16:57:16,994 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-18 16:57:16,995 - neo4j.io - DEBUG - [#DC1D]  S: SUCCESS {}
+2024-10-18 16:57:16,995 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-18 16:57:16,996 - neo4j.io - DEBUG - [#DC1D]  C: ROUTE {'address': 'localhost:7687'} () {}
+2024-10-18 16:57:16,997 - neo4j.io - DEBUG - [#DC1D]  S: SUCCESS {'rt': {'servers': [{'addresses': ['localhost:7687'], 'role': 'WRITE'}, {'addresses': ['localhost:7687'], 'role': 'READ'}, {'addresses': ['localhost:7687'], 'role': 'ROUTE'}], 'ttl': 300, 'db': 'neo4j'}}
+2024-10-18 16:57:16,997 - neo4j.pool - DEBUG - [#DC1D]  _: <POOL> released bolt-96
+2024-10-18 16:57:16,998 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> updated table=RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403653.703, ttl=300)
+2024-10-18 16:57:16,999 - neo4j.pool - DEBUG - [#0000]  _: <POOL> update routing table from address=ResolvedIPv4Address(('127.0.0.1', 7687)) (RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403653.703, ttl=300))
+2024-10-18 16:57:16,999 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire routing connection, access_mode='READ', database='neo4j'
+2024-10-18 16:57:17,000 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=None
+2024-10-18 16:57:17,000 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403651.64, ttl=0, perf_time=403653.703 => False
+2024-10-18 16:57:17,001 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=neo4j
+2024-10-18 16:57:17,001 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403653.703, ttl=300, perf_time=403653.703 => False
+2024-10-18 16:57:17,001 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> checking table freshness (readonly=True): table expired=False, has_server_for_mode=True, table routers={IPv4Address(('localhost', 7687))} => True
+2024-10-18 16:57:17,002 - neo4j.pool - DEBUG - [#0000]  _: <POOL> using existing routing table RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403653.703, ttl=300)
+2024-10-18 16:57:17,002 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire address, database='neo4j' address=IPv4Address(('localhost', 7687))
+2024-10-18 16:57:17,003 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-18 16:57:17,003 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-18 16:57:17,004 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-18 16:57:17,005 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-18 16:57:19,047 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-18 16:57:19,048 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-18 16:57:19,048 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-18 16:57:19,048 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-18 16:57:19,049 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-18 16:57:19,049 - neo4j.io - DEBUG - [#DC1F]  C: <MAGIC> 0x6060B017
+2024-10-18 16:57:19,050 - neo4j.io - DEBUG - [#DC1F]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-18 16:57:19,050 - neo4j.io - DEBUG - [#DC1F]  S: <HANDSHAKE> 0x00000605
+2024-10-18 16:57:19,050 - neo4j.io - DEBUG - [#DC1F]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-18 16:57:19,051 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-18 16:57:19,051 - neo4j.io - DEBUG - [#DC1F]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-18 16:57:19,051 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-97', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  S: SUCCESS {}
+2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-18 16:57:19,052 - neo4j.pool - DEBUG - [#DC1F]  _: <POOL> released bolt-97
+2024-10-18 16:57:19,053 - root - INFO - hello world
+2024-10-18 16:57:19,057 - uvicorn.error - INFO - Started server process [41188]
+2024-10-18 16:57:19,057 - uvicorn.error - INFO - Waiting for application startup.
+2024-10-18 16:57:19,057 - uvicorn.error - INFO - Application startup complete.
+2024-10-18 16:57:19,057 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2024-10-18 16:57:29,432 - uvicorn.error - INFO - Shutting down
+2024-10-18 16:57:29,540 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-10-18 16:57:29,540 - uvicorn.error - INFO - Application shutdown complete.
+2024-10-18 16:57:29,541 - uvicorn.error - INFO - Finished server process [41188]
+2024-10-18 16:57:58,243 - asyncio - DEBUG - Using proactor: IocpProactor
+2024-10-18 16:57:58,985 - neo4j.pool - DEBUG - [#0000]  _: <POOL> created, routing address IPv4Address(('localhost', 7687))
+2024-10-18 16:57:58,986 - neo4j - DEBUG - [#0000]  _: <WORKSPACE> resolve home database
+2024-10-18 16:57:58,986 - neo4j.pool - DEBUG - [#0000]  _: <POOL> attempting to update routing table from IPv4Address(('localhost', 7687))
+2024-10-18 16:57:58,986 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-18 16:57:58,989 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-18 16:57:58,990 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-18 16:57:58,990 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-18 16:57:58,990 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-18 16:58:01,032 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-18 16:58:01,032 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-18 16:58:01,032 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-18 16:58:01,033 - neo4j.pool - DEBUG - [#0000]  _: <POOL> deactivating address ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-18 16:58:01,033 - neo4j.pool - DEBUG - [#0000]  _: <POOL> table={None: RoutingTable(database=None, routers={IPv4Address(('localhost', 7687))}, readers={}, writers={}, last_updated_time=403695.687, ttl=0)}
+2024-10-18 16:58:01,033 - neo4j.pool - DEBUG - [#0000]  _: <POOL> failed to fetch routing info from ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-18 16:58:01,034 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-18 16:58:01,034 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv4Address(('127.0.0.1', 7687))
+2024-10-18 16:58:01,034 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-18 16:58:01,034 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-18 16:58:01,039 - neo4j.io - DEBUG - [#DC34]  C: <MAGIC> 0x6060B017
+2024-10-18 16:58:01,040 - neo4j.io - DEBUG - [#DC34]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-18 16:58:01,040 - neo4j.io - DEBUG - [#DC34]  S: <HANDSHAKE> 0x00000605
+2024-10-18 16:58:01,041 - neo4j.io - DEBUG - [#DC34]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-18 16:58:01,041 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-18 16:58:01,042 - neo4j.io - DEBUG - [#DC34]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-18 16:58:01,042 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-18 16:58:01,042 - neo4j.io - DEBUG - [#DC34]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-98', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-18 16:58:01,043 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-18 16:58:01,044 - neo4j.io - DEBUG - [#DC34]  S: SUCCESS {}
+2024-10-18 16:58:01,044 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-18 16:58:01,044 - neo4j.io - DEBUG - [#DC34]  C: ROUTE {'address': 'localhost:7687'} () {}
+2024-10-18 16:58:01,045 - neo4j.io - DEBUG - [#DC34]  S: SUCCESS {'rt': {'servers': [{'addresses': ['localhost:7687'], 'role': 'WRITE'}, {'addresses': ['localhost:7687'], 'role': 'READ'}, {'addresses': ['localhost:7687'], 'role': 'ROUTE'}], 'ttl': 300, 'db': 'neo4j'}}
+2024-10-18 16:58:01,045 - neo4j.pool - DEBUG - [#DC34]  _: <POOL> released bolt-98
+2024-10-18 16:58:01,045 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> updated table=RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403697.75, ttl=300)
+2024-10-18 16:58:01,045 - neo4j.pool - DEBUG - [#0000]  _: <POOL> update routing table from address=ResolvedIPv4Address(('127.0.0.1', 7687)) (RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403697.75, ttl=300))
+2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire routing connection, access_mode='READ', database='neo4j'
+2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=None
+2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403695.687, ttl=0, perf_time=403697.75 => False
+2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=neo4j
+2024-10-18 16:58:01,048 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403697.75, ttl=300, perf_time=403697.75 => False
+2024-10-18 16:58:01,048 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> checking table freshness (readonly=True): table expired=False, has_server_for_mode=True, table routers={IPv4Address(('localhost', 7687))} => True
+2024-10-18 16:58:01,048 - neo4j.pool - DEBUG - [#0000]  _: <POOL> using existing routing table RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403697.75, ttl=300)
+2024-10-18 16:58:01,049 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire address, database='neo4j' address=IPv4Address(('localhost', 7687))
+2024-10-18 16:58:01,049 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-18 16:58:01,049 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-18 16:58:01,050 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-18 16:58:01,050 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-18 16:58:03,082 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-18 16:58:03,083 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-18 16:58:03,084 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-18 16:58:03,084 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-18 16:58:03,084 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-18 16:58:03,097 - neo4j.io - DEBUG - [#DC36]  C: <MAGIC> 0x6060B017
+2024-10-18 16:58:03,097 - neo4j.io - DEBUG - [#DC36]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-18 16:58:03,099 - neo4j.io - DEBUG - [#DC36]  S: <HANDSHAKE> 0x00000605
+2024-10-18 16:58:03,099 - neo4j.io - DEBUG - [#DC36]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-18 16:58:03,100 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-18 16:58:03,100 - neo4j.io - DEBUG - [#DC36]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-18 16:58:03,102 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-18 16:58:03,103 - neo4j.io - DEBUG - [#DC36]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-99', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-18 16:58:03,103 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-18 16:58:03,104 - neo4j.io - DEBUG - [#DC36]  S: SUCCESS {}
+2024-10-18 16:58:03,105 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-18 16:58:03,106 - neo4j.pool - DEBUG - [#DC36]  _: <POOL> released bolt-99
+2024-10-18 16:58:03,106 - root - INFO - hello world
+2024-10-18 16:58:03,110 - uvicorn.error - INFO - Started server process [26212]
+2024-10-18 16:58:03,110 - uvicorn.error - INFO - Waiting for application startup.
+2024-10-18 16:58:03,112 - uvicorn.error - INFO - Application startup complete.
+2024-10-18 16:58:03,112 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2024-10-18 16:58:10,929 - uvicorn.access - INFO - 127.0.0.1:56384 - "GET /docs HTTP/1.1" 200
+2024-10-18 16:58:11,026 - uvicorn.access - INFO - 127.0.0.1:56384 - "GET /openapi.json HTTP/1.1" 200
+2024-10-18 16:58:17,945 - uvicorn.access - INFO - 127.0.0.1:56385 - "POST /recommend HTTP/1.1" 200
+2024-10-18 16:58:38,251 - uvicorn.access - INFO - 127.0.0.1:56386 - "POST /recommend HTTP/1.1" 422
+2024-10-18 16:58:45,646 - uvicorn.error - INFO - Shutting down
+2024-10-18 16:58:45,755 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-10-18 16:58:45,755 - uvicorn.error - INFO - Application shutdown complete.
+2024-10-18 16:58:45,756 - uvicorn.error - INFO - Finished server process [26212]
