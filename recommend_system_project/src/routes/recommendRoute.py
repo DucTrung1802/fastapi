@@ -8,11 +8,30 @@ router = APIRouter()
 TAG_NAME = "recommend"
 
 
-@router.post("/recommend_single", tags=[TAG_NAME], response_model=RecommendSingleOutput)
-async def recommend_single(request: RecommendSingleInput = Body(...)):
-    pass
+@router.post("/recommend", tags=[TAG_NAME], response_model=RecommendResponse)
+async def recommend(request: RecommendRequest = Body(...)):
+    mock_response = RecommendResponse(
+        lcv_id=request.lcv_id,
+        result=[
+            RecommendationResult(
+                similarity_score=0.95,
+                recommend=[
+                    RegimenRecommendation(
+                        regimen_id=regimen.regimen_id,
+                        sku=regimen.sku,
+                        shots=[
+                            ShotRecommendation(
+                                order=shot.order,
+                                recommended_date=shot.prefer_date,  # Just reusing preferred date as mock
+                            )
+                            for shot in regimen.shots
+                        ],
+                    )
+                    for regimen in request.requested
+                ],
+            )
+        ],
+    )
 
-
-@router.post("/recommend_combo", tags=[TAG_NAME], response_model=RecommendComboOutput)
-async def recommend_combo(request: RecommendComboInput = Body(...)):
-    pass
+    # Return mock response to match expected structure
+    return mock_response
