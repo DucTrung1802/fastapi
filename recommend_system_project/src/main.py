@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from .config import configuration, environment, neo4j_db
-from .routes import userRoute
+from .routes import userRoute, recommendRoute
 from .middlewares.errorHandlingMiddleware import ExceptionHandlerMapping
 
 neo4j_db.init_neontology(
@@ -14,6 +14,9 @@ app = FastAPI()
 
 # Routers
 app.include_router(userRoute.router)
+
+app.include_router(recommendRoute.router)
+
 
 # Exception handlers
 for excection, excection_handler in ExceptionHandlerMapping:

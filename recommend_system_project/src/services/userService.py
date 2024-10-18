@@ -5,7 +5,7 @@ from ..config import configuration, environment
 from ..models.neo4j import neo4j_models
 from ..models.userModels import *
 from ..providers import jwtProvider
-from ..utils import enums
+from ..utils import enums, utils
 from ..utils.exceptions import *
 
 TOKEN_LOCATION = configuration.TOKEN_LOCATION
@@ -20,6 +20,7 @@ async def create_user(request: User):
         return JSONResponse(content={"message": "User already exists."})
 
     # Create new user
+    request.password = utils.hash_password(request.password)
     new_user = neo4j_models.User(
         full_name=request.full_name, email=request.email, password=request.password
     ).merge()
@@ -34,6 +35,12 @@ async def login(request: OAuth2EmailPasswordRequestForm):
     user = neo4j_models.User.match(pp=request.email)
 
     if not user:
+        raise UnauthorizedException
+
+    # Verify password
+    if not utils.verify_password(
+        stored_password=user.password, provided_password=request.password
+    ):
         raise UnauthorizedException
 
     # Create payload to include in JWT token
