@@ -11,3 +11,4 @@ python-multipart
 neontology
 password-validator
 email-validator
+logging
