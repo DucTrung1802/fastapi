@@ -11,7 +11,8 @@ neo4j_db.init_neontology(
     environment.NEO4J_DB_PASSWORD,
 )
 
-initialize_logging()
+if configuration.ENABLE_LOGGING:
+    initialize_logging()
 
 app = FastAPI()
 

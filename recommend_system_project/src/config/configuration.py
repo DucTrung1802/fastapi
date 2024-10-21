@@ -4,6 +4,7 @@ from ..utils import enums
 
 # CONFIGURATION PARAMETERS
 
+ENABLE_LOGGING = False
 TOKEN_LOCATION = enums.TokenLocation.HEADER
 ACCESS_TOKEN_LIFETIME = timedelta(hours=1)
 REFRESH_TOKEN_LIFETIME = timedelta(days=14)

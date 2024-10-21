@@ -1,33 +1,38 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 from typing import List, Optional
-from datetime import datetime
+from datetime import date
 
 
 # Request Models
 class ShotRequest(BaseModel):
     order: int = Field(..., description="Shot order in the regimen")
-    prefer_date: datetime = Field(..., description="Preferred date for the shot")
+    prefer_date: date = Field(..., description="Preferred date for the shot")
 
 
 class RegimenRequest(BaseModel):
     regimen_id: str = Field(..., description="ID of the regimen")
     sku: str = Field(..., description="Vaccine ID")
     shots: Optional[List[ShotRequest]] = Field(
-        ..., description="List of requested shots"
+        None, description="List of requested shots"
     )
 
 
-class RecommendRequest(BaseModel):
-    lcv_id: str = Field(..., description="Patient ID")
+class RecommendationRequest(BaseModel):
+    lcv_id: int = Field(..., description="Patient ID", example=8)
     requested: List[RegimenRequest] = Field(
-        ..., description="List of requested regimens and shots"
+        ...,
+        description="List of requested regimens and shots",
+        example=[
+            {"regimen_id": "regimen 1", "sku": "HEXAXIM"},
+            {"regimen_id": "regimen 2", "sku": "ROTATEQ 2ML"},
+        ],
     )
 
 
 # Response Models
 class ShotRecommendation(BaseModel):
     order: int = Field(..., description="Recommended shot order")
-    recommended_date: datetime = Field(..., description="Recommended date for the shot")
+    recommended_date: date = Field(..., description="Recommended date for the shot")
 
 
 class RegimenRecommendation(BaseModel):
@@ -48,8 +53,12 @@ class RecommendationResult(BaseModel):
     )
 
 
-class RecommendResponse(BaseModel):
+class RecommendationResponse(BaseModel):
     lcv_id: str = Field(..., description="Patient ID")
     result: List[RecommendationResult] = Field(
         ..., description="List of recommendation results"
     )
+
+
+class Recommendations(RootModel[List[RecommendationResponse]]):
+    pass
