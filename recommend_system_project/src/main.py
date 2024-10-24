@@ -6,7 +6,7 @@ from .middlewares.errorHandlingMiddleware import ExceptionHandlerMapping
 from .utils.logging import *
 
 neo4j_db.init_neontology(
-    configuration.NEO4J_DB_URI,
+    environment.NEO4J_DB_URI,
     environment.NEO4J_DB_USERNAME,
     environment.NEO4J_DB_PASSWORD,
 )
@@ -15,8 +15,6 @@ if configuration.ENABLE_LOGGING:
     initialize_logging()
 
 app = FastAPI()
-
-log(log_level=LogLevel.INFO, message="hello world")
 
 # Routers
 app.include_router(userRoute.router)

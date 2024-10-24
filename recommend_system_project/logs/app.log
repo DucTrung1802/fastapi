@@ -1,150 +1,354 @@
-2024-10-18 16:57:14,093 - asyncio - DEBUG - Using proactor: IocpProactor
-2024-10-18 16:57:14,932 - neo4j.pool - DEBUG - [#0000]  _: <POOL> created, routing address IPv4Address(('localhost', 7687))
-2024-10-18 16:57:14,933 - neo4j - DEBUG - [#0000]  _: <WORKSPACE> resolve home database
-2024-10-18 16:57:14,933 - neo4j.pool - DEBUG - [#0000]  _: <POOL> attempting to update routing table from IPv4Address(('localhost', 7687))
-2024-10-18 16:57:14,933 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
-2024-10-18 16:57:14,936 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
-2024-10-18 16:57:14,936 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv6Address(('::1', 7687, 0, 0))
-2024-10-18 16:57:14,937 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
-2024-10-18 16:57:14,937 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
-2024-10-18 16:57:16,977 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
-2024-10-18 16:57:16,978 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
-2024-10-18 16:57:16,978 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
-2024-10-18 16:57:16,979 - neo4j.pool - DEBUG - [#0000]  _: <POOL> deactivating address ResolvedIPv6Address(('::1', 7687, 0, 0))
-2024-10-18 16:57:16,979 - neo4j.pool - DEBUG - [#0000]  _: <POOL> table={None: RoutingTable(database=None, routers={IPv4Address(('localhost', 7687))}, readers={}, writers={}, last_updated_time=403651.64, ttl=0)}
-2024-10-18 16:57:16,979 - neo4j.pool - DEBUG - [#0000]  _: <POOL> failed to fetch routing info from ResolvedIPv6Address(('::1', 7687, 0, 0))
-2024-10-18 16:57:16,979 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
-2024-10-18 16:57:16,980 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv4Address(('127.0.0.1', 7687))
-2024-10-18 16:57:16,980 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
-2024-10-18 16:57:16,980 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
-2024-10-18 16:57:16,986 - neo4j.io - DEBUG - [#DC1D]  C: <MAGIC> 0x6060B017
-2024-10-18 16:57:16,987 - neo4j.io - DEBUG - [#DC1D]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
-2024-10-18 16:57:16,990 - neo4j.io - DEBUG - [#DC1D]  S: <HANDSHAKE> 0x00000605
-2024-10-18 16:57:16,990 - neo4j.io - DEBUG - [#DC1D]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
-2024-10-18 16:57:16,991 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
-2024-10-18 16:57:16,991 - neo4j.io - DEBUG - [#DC1D]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
-2024-10-18 16:57:16,992 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> client state: AUTHENTICATION > READY
-2024-10-18 16:57:16,994 - neo4j.io - DEBUG - [#DC1D]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-96', 'hints': {'connection.recv_timeout_seconds': 120}}
-2024-10-18 16:57:16,994 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
-2024-10-18 16:57:16,995 - neo4j.io - DEBUG - [#DC1D]  S: SUCCESS {}
-2024-10-18 16:57:16,995 - neo4j.io - DEBUG - [#DC1D]  _: <CONNECTION> server state: AUTHENTICATION > READY
-2024-10-18 16:57:16,996 - neo4j.io - DEBUG - [#DC1D]  C: ROUTE {'address': 'localhost:7687'} () {}
-2024-10-18 16:57:16,997 - neo4j.io - DEBUG - [#DC1D]  S: SUCCESS {'rt': {'servers': [{'addresses': ['localhost:7687'], 'role': 'WRITE'}, {'addresses': ['localhost:7687'], 'role': 'READ'}, {'addresses': ['localhost:7687'], 'role': 'ROUTE'}], 'ttl': 300, 'db': 'neo4j'}}
-2024-10-18 16:57:16,997 - neo4j.pool - DEBUG - [#DC1D]  _: <POOL> released bolt-96
-2024-10-18 16:57:16,998 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> updated table=RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403653.703, ttl=300)
-2024-10-18 16:57:16,999 - neo4j.pool - DEBUG - [#0000]  _: <POOL> update routing table from address=ResolvedIPv4Address(('127.0.0.1', 7687)) (RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403653.703, ttl=300))
-2024-10-18 16:57:16,999 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire routing connection, access_mode='READ', database='neo4j'
-2024-10-18 16:57:17,000 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=None
-2024-10-18 16:57:17,000 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403651.64, ttl=0, perf_time=403653.703 => False
-2024-10-18 16:57:17,001 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=neo4j
-2024-10-18 16:57:17,001 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403653.703, ttl=300, perf_time=403653.703 => False
-2024-10-18 16:57:17,001 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> checking table freshness (readonly=True): table expired=False, has_server_for_mode=True, table routers={IPv4Address(('localhost', 7687))} => True
-2024-10-18 16:57:17,002 - neo4j.pool - DEBUG - [#0000]  _: <POOL> using existing routing table RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403653.703, ttl=300)
-2024-10-18 16:57:17,002 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire address, database='neo4j' address=IPv4Address(('localhost', 7687))
-2024-10-18 16:57:17,003 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
-2024-10-18 16:57:17,003 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
-2024-10-18 16:57:17,004 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
-2024-10-18 16:57:17,005 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
-2024-10-18 16:57:19,047 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
-2024-10-18 16:57:19,048 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
-2024-10-18 16:57:19,048 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
-2024-10-18 16:57:19,048 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
-2024-10-18 16:57:19,049 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
-2024-10-18 16:57:19,049 - neo4j.io - DEBUG - [#DC1F]  C: <MAGIC> 0x6060B017
-2024-10-18 16:57:19,050 - neo4j.io - DEBUG - [#DC1F]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
-2024-10-18 16:57:19,050 - neo4j.io - DEBUG - [#DC1F]  S: <HANDSHAKE> 0x00000605
-2024-10-18 16:57:19,050 - neo4j.io - DEBUG - [#DC1F]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
-2024-10-18 16:57:19,051 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
-2024-10-18 16:57:19,051 - neo4j.io - DEBUG - [#DC1F]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
-2024-10-18 16:57:19,051 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> client state: AUTHENTICATION > READY
-2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-97', 'hints': {'connection.recv_timeout_seconds': 120}}
-2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
-2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  S: SUCCESS {}
-2024-10-18 16:57:19,052 - neo4j.io - DEBUG - [#DC1F]  _: <CONNECTION> server state: AUTHENTICATION > READY
-2024-10-18 16:57:19,052 - neo4j.pool - DEBUG - [#DC1F]  _: <POOL> released bolt-97
-2024-10-18 16:57:19,053 - root - INFO - hello world
-2024-10-18 16:57:19,057 - uvicorn.error - INFO - Started server process [41188]
-2024-10-18 16:57:19,057 - uvicorn.error - INFO - Waiting for application startup.
-2024-10-18 16:57:19,057 - uvicorn.error - INFO - Application startup complete.
-2024-10-18 16:57:19,057 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2024-10-18 16:57:29,432 - uvicorn.error - INFO - Shutting down
-2024-10-18 16:57:29,540 - uvicorn.error - INFO - Waiting for application shutdown.
-2024-10-18 16:57:29,540 - uvicorn.error - INFO - Application shutdown complete.
-2024-10-18 16:57:29,541 - uvicorn.error - INFO - Finished server process [41188]
-2024-10-18 16:57:58,243 - asyncio - DEBUG - Using proactor: IocpProactor
-2024-10-18 16:57:58,985 - neo4j.pool - DEBUG - [#0000]  _: <POOL> created, routing address IPv4Address(('localhost', 7687))
-2024-10-18 16:57:58,986 - neo4j - DEBUG - [#0000]  _: <WORKSPACE> resolve home database
-2024-10-18 16:57:58,986 - neo4j.pool - DEBUG - [#0000]  _: <POOL> attempting to update routing table from IPv4Address(('localhost', 7687))
-2024-10-18 16:57:58,986 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
-2024-10-18 16:57:58,989 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
-2024-10-18 16:57:58,990 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv6Address(('::1', 7687, 0, 0))
-2024-10-18 16:57:58,990 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
-2024-10-18 16:57:58,990 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
-2024-10-18 16:58:01,032 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
-2024-10-18 16:58:01,032 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
-2024-10-18 16:58:01,032 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
-2024-10-18 16:58:01,033 - neo4j.pool - DEBUG - [#0000]  _: <POOL> deactivating address ResolvedIPv6Address(('::1', 7687, 0, 0))
-2024-10-18 16:58:01,033 - neo4j.pool - DEBUG - [#0000]  _: <POOL> table={None: RoutingTable(database=None, routers={IPv4Address(('localhost', 7687))}, readers={}, writers={}, last_updated_time=403695.687, ttl=0)}
-2024-10-18 16:58:01,033 - neo4j.pool - DEBUG - [#0000]  _: <POOL> failed to fetch routing info from ResolvedIPv6Address(('::1', 7687, 0, 0))
-2024-10-18 16:58:01,034 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
-2024-10-18 16:58:01,034 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv4Address(('127.0.0.1', 7687))
-2024-10-18 16:58:01,034 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
-2024-10-18 16:58:01,034 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
-2024-10-18 16:58:01,039 - neo4j.io - DEBUG - [#DC34]  C: <MAGIC> 0x6060B017
-2024-10-18 16:58:01,040 - neo4j.io - DEBUG - [#DC34]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
-2024-10-18 16:58:01,040 - neo4j.io - DEBUG - [#DC34]  S: <HANDSHAKE> 0x00000605
-2024-10-18 16:58:01,041 - neo4j.io - DEBUG - [#DC34]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
-2024-10-18 16:58:01,041 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
-2024-10-18 16:58:01,042 - neo4j.io - DEBUG - [#DC34]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
-2024-10-18 16:58:01,042 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> client state: AUTHENTICATION > READY
-2024-10-18 16:58:01,042 - neo4j.io - DEBUG - [#DC34]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-98', 'hints': {'connection.recv_timeout_seconds': 120}}
-2024-10-18 16:58:01,043 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
-2024-10-18 16:58:01,044 - neo4j.io - DEBUG - [#DC34]  S: SUCCESS {}
-2024-10-18 16:58:01,044 - neo4j.io - DEBUG - [#DC34]  _: <CONNECTION> server state: AUTHENTICATION > READY
-2024-10-18 16:58:01,044 - neo4j.io - DEBUG - [#DC34]  C: ROUTE {'address': 'localhost:7687'} () {}
-2024-10-18 16:58:01,045 - neo4j.io - DEBUG - [#DC34]  S: SUCCESS {'rt': {'servers': [{'addresses': ['localhost:7687'], 'role': 'WRITE'}, {'addresses': ['localhost:7687'], 'role': 'READ'}, {'addresses': ['localhost:7687'], 'role': 'ROUTE'}], 'ttl': 300, 'db': 'neo4j'}}
-2024-10-18 16:58:01,045 - neo4j.pool - DEBUG - [#DC34]  _: <POOL> released bolt-98
-2024-10-18 16:58:01,045 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> updated table=RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403697.75, ttl=300)
-2024-10-18 16:58:01,045 - neo4j.pool - DEBUG - [#0000]  _: <POOL> update routing table from address=ResolvedIPv4Address(('127.0.0.1', 7687)) (RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403697.75, ttl=300))
-2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire routing connection, access_mode='READ', database='neo4j'
-2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=None
-2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403695.687, ttl=0, perf_time=403697.75 => False
-2024-10-18 16:58:01,047 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=neo4j
-2024-10-18 16:58:01,048 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=403697.75, ttl=300, perf_time=403697.75 => False
-2024-10-18 16:58:01,048 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> checking table freshness (readonly=True): table expired=False, has_server_for_mode=True, table routers={IPv4Address(('localhost', 7687))} => True
-2024-10-18 16:58:01,048 - neo4j.pool - DEBUG - [#0000]  _: <POOL> using existing routing table RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=403697.75, ttl=300)
-2024-10-18 16:58:01,049 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire address, database='neo4j' address=IPv4Address(('localhost', 7687))
-2024-10-18 16:58:01,049 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
-2024-10-18 16:58:01,049 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
-2024-10-18 16:58:01,050 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
-2024-10-18 16:58:01,050 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
-2024-10-18 16:58:03,082 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
-2024-10-18 16:58:03,083 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
-2024-10-18 16:58:03,084 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
-2024-10-18 16:58:03,084 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
-2024-10-18 16:58:03,084 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
-2024-10-18 16:58:03,097 - neo4j.io - DEBUG - [#DC36]  C: <MAGIC> 0x6060B017
-2024-10-18 16:58:03,097 - neo4j.io - DEBUG - [#DC36]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
-2024-10-18 16:58:03,099 - neo4j.io - DEBUG - [#DC36]  S: <HANDSHAKE> 0x00000605
-2024-10-18 16:58:03,099 - neo4j.io - DEBUG - [#DC36]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
-2024-10-18 16:58:03,100 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
-2024-10-18 16:58:03,100 - neo4j.io - DEBUG - [#DC36]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
-2024-10-18 16:58:03,102 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> client state: AUTHENTICATION > READY
-2024-10-18 16:58:03,103 - neo4j.io - DEBUG - [#DC36]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-99', 'hints': {'connection.recv_timeout_seconds': 120}}
-2024-10-18 16:58:03,103 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
-2024-10-18 16:58:03,104 - neo4j.io - DEBUG - [#DC36]  S: SUCCESS {}
-2024-10-18 16:58:03,105 - neo4j.io - DEBUG - [#DC36]  _: <CONNECTION> server state: AUTHENTICATION > READY
-2024-10-18 16:58:03,106 - neo4j.pool - DEBUG - [#DC36]  _: <POOL> released bolt-99
-2024-10-18 16:58:03,106 - root - INFO - hello world
-2024-10-18 16:58:03,110 - uvicorn.error - INFO - Started server process [26212]
-2024-10-18 16:58:03,110 - uvicorn.error - INFO - Waiting for application startup.
-2024-10-18 16:58:03,112 - uvicorn.error - INFO - Application startup complete.
-2024-10-18 16:58:03,112 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2024-10-18 16:58:10,929 - uvicorn.access - INFO - 127.0.0.1:56384 - "GET /docs HTTP/1.1" 200
-2024-10-18 16:58:11,026 - uvicorn.access - INFO - 127.0.0.1:56384 - "GET /openapi.json HTTP/1.1" 200
-2024-10-18 16:58:17,945 - uvicorn.access - INFO - 127.0.0.1:56385 - "POST /recommend HTTP/1.1" 200
-2024-10-18 16:58:38,251 - uvicorn.access - INFO - 127.0.0.1:56386 - "POST /recommend HTTP/1.1" 422
-2024-10-18 16:58:45,646 - uvicorn.error - INFO - Shutting down
-2024-10-18 16:58:45,755 - uvicorn.error - INFO - Waiting for application shutdown.
-2024-10-18 16:58:45,755 - uvicorn.error - INFO - Application shutdown complete.
-2024-10-18 16:58:45,756 - uvicorn.error - INFO - Finished server process [26212]
+2024-10-24 11:28:32,106 - asyncio - DEBUG - Using proactor: IocpProactor
+2024-10-24 11:28:33,865 - root - INFO - hello world
+2024-10-24 11:28:33,867 - uvicorn.error - INFO - Started server process [29604]
+2024-10-24 11:28:33,868 - uvicorn.error - INFO - Waiting for application startup.
+2024-10-24 11:28:33,868 - uvicorn.error - INFO - Application startup complete.
+2024-10-24 11:28:33,869 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2024-10-24 11:28:35,399 - uvicorn.access - INFO - 127.0.0.1:65195 - "GET /docs HTTP/1.1" 200
+2024-10-24 11:28:35,583 - uvicorn.access - INFO - 127.0.0.1:65195 - "GET /openapi.json HTTP/1.1" 200
+2024-10-24 11:28:42,908 - uvicorn.access - INFO - 127.0.0.1:65196 - "POST /recommend HTTP/1.1" 500
+2024-10-24 11:28:42,909 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\routes\recommendRoute.py", line 16, in recommend
+    return await recommendController.recommend(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\controller\recommendController.py", line 6, in recommend
+    return await recommendService.recommend(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\services\recommendService.py", line 144, in recommend
+    neo4j_conn = Neo4jConnection(
+                 ^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\services\recommendService.py", line 16, in __init__
+    self.driver = GraphDatabase.driver(uri, auth=(user, password))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\neo4j\_sync\driver.py", line 202, in driver
+    driver_type, security_type, parsed = parse_neo4j_uri(uri)
+                                         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\neo4j\api.py", line 583, in parse_neo4j_uri
+    raise ConfigurationError(
+neo4j.exceptions.ConfigurationError: URI scheme b'' is not supported. Supported URI schemes are ['bolt', 'bolt+ssc', 'bolt+s', 'neo4j', 'neo4j+ssc', 'neo4j+s']. Examples: bolt://host[:port] or neo4j://host[:port][?routing_context]
+2024-10-24 11:28:47,785 - uvicorn.access - INFO - 127.0.0.1:65228 - "POST /recommend HTTP/1.1" 500
+2024-10-24 11:28:47,785 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\routes\recommendRoute.py", line 16, in recommend
+    return await recommendController.recommend(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\controller\recommendController.py", line 6, in recommend
+    return await recommendService.recommend(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\services\recommendService.py", line 144, in recommend
+    neo4j_conn = Neo4jConnection(
+                 ^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\services\recommendService.py", line 16, in __init__
+    self.driver = GraphDatabase.driver(uri, auth=(user, password))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\neo4j\_sync\driver.py", line 202, in driver
+    driver_type, security_type, parsed = parse_neo4j_uri(uri)
+                                         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\neo4j\api.py", line 583, in parse_neo4j_uri
+    raise ConfigurationError(
+neo4j.exceptions.ConfigurationError: URI scheme b'' is not supported. Supported URI schemes are ['bolt', 'bolt+ssc', 'bolt+s', 'neo4j', 'neo4j+ssc', 'neo4j+s']. Examples: bolt://host[:port] or neo4j://host[:port][?routing_context]
+2024-10-24 11:30:02,188 - uvicorn.access - INFO - 127.0.0.1:65260 - "POST /recommend HTTP/1.1" 500
+2024-10-24 11:30:02,188 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\routes\recommendRoute.py", line 16, in recommend
+    return await recommendController.recommend(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\controller\recommendController.py", line 6, in recommend
+    return await recommendService.recommend(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\services\recommendService.py", line 144, in recommend
+    neo4j_conn = Neo4jConnection(
+                 ^^^^^^^^^^^^^^^^
+  File "D:\FPT\GIT\fastapi\recommend_system_project\src\services\recommendService.py", line 16, in __init__
+    self.driver = GraphDatabase.driver(uri, auth=(user, password))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\neo4j\_sync\driver.py", line 202, in driver
+    driver_type, security_type, parsed = parse_neo4j_uri(uri)
+                                         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lyduc\AppData\Local\Programs\Python\Python312\Lib\site-packages\neo4j\api.py", line 583, in parse_neo4j_uri
+    raise ConfigurationError(
+neo4j.exceptions.ConfigurationError: URI scheme b'' is not supported. Supported URI schemes are ['bolt', 'bolt+ssc', 'bolt+s', 'neo4j', 'neo4j+ssc', 'neo4j+s']. Examples: bolt://host[:port] or neo4j://host[:port][?routing_context]
+2024-10-24 11:30:12,786 - uvicorn.error - INFO - Shutting down
+2024-10-24 11:30:12,895 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-10-24 11:30:12,895 - uvicorn.error - INFO - Application shutdown complete.
+2024-10-24 11:30:12,895 - uvicorn.error - INFO - Finished server process [29604]
+2024-10-24 11:30:23,003 - asyncio - DEBUG - Using proactor: IocpProactor
+2024-10-24 11:30:24,313 - neo4j.pool - DEBUG - [#0000]  _: <POOL> created, routing address IPv4Address(('localhost', 7687))
+2024-10-24 11:30:24,315 - neo4j - DEBUG - [#0000]  _: <WORKSPACE> resolve home database
+2024-10-24 11:30:24,315 - neo4j.pool - DEBUG - [#0000]  _: <POOL> attempting to update routing table from IPv4Address(('localhost', 7687))
+2024-10-24 11:30:24,315 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-24 11:30:24,321 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-24 11:30:24,321 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-24 11:30:24,321 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-24 11:30:24,321 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-24 11:30:26,358 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-24 11:30:26,358 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-24 11:30:26,359 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-24 11:30:26,359 - neo4j.pool - DEBUG - [#0000]  _: <POOL> deactivating address ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-24 11:30:26,359 - neo4j.pool - DEBUG - [#0000]  _: <POOL> table={None: RoutingTable(database=None, routers={IPv4Address(('localhost', 7687))}, readers={}, writers={}, last_updated_time=419720.015, ttl=0)}
+2024-10-24 11:30:26,359 - neo4j.pool - DEBUG - [#0000]  _: <POOL> failed to fetch routing info from ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-24 11:30:26,361 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-24 11:30:26,361 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database=None, address=ResolvedIPv4Address(('127.0.0.1', 7687))
+2024-10-24 11:30:26,361 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-24 11:30:26,361 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-24 11:30:26,369 - neo4j.io - DEBUG - [#FF19]  C: <MAGIC> 0x6060B017
+2024-10-24 11:30:26,370 - neo4j.io - DEBUG - [#FF19]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-24 11:30:26,371 - neo4j.io - DEBUG - [#FF19]  S: <HANDSHAKE> 0x00000605
+2024-10-24 11:30:26,371 - neo4j.io - DEBUG - [#FF19]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-24 11:30:26,371 - neo4j.io - DEBUG - [#FF19]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:26,372 - neo4j.io - DEBUG - [#FF19]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-24 11:30:26,372 - neo4j.io - DEBUG - [#FF19]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-24 11:30:26,376 - neo4j.io - DEBUG - [#FF19]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-6', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-24 11:30:26,376 - neo4j.io - DEBUG - [#FF19]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:26,377 - neo4j.io - DEBUG - [#FF19]  S: SUCCESS {}
+2024-10-24 11:30:26,377 - neo4j.io - DEBUG - [#FF19]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-24 11:30:26,377 - neo4j.io - DEBUG - [#FF19]  C: ROUTE {'address': 'localhost:7687'} () {}
+2024-10-24 11:30:26,383 - neo4j.io - DEBUG - [#FF19]  S: SUCCESS {'rt': {'servers': [{'addresses': ['localhost:7687'], 'role': 'WRITE'}, {'addresses': ['localhost:7687'], 'role': 'READ'}, {'addresses': ['localhost:7687'], 'role': 'ROUTE'}], 'ttl': 300, 'db': 'neo4j'}}
+2024-10-24 11:30:26,384 - neo4j.pool - DEBUG - [#FF19]  _: <POOL> released bolt-6
+2024-10-24 11:30:26,384 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> updated table=RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=419722.093, ttl=300)
+2024-10-24 11:30:26,384 - neo4j.pool - DEBUG - [#0000]  _: <POOL> update routing table from address=ResolvedIPv4Address(('127.0.0.1', 7687)) (RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=419722.093, ttl=300))
+2024-10-24 11:30:26,385 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire routing connection, access_mode='READ', database='neo4j'
+2024-10-24 11:30:26,386 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=None
+2024-10-24 11:30:26,386 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=419720.015, ttl=0, perf_time=419722.093 => False
+2024-10-24 11:30:26,386 - neo4j.pool - DEBUG - [#0000]  _: <POOL> routing aged?, database=neo4j
+2024-10-24 11:30:26,386 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> purge check: last_updated_time=419722.093, ttl=300, perf_time=419722.093 => False
+2024-10-24 11:30:26,387 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> checking table freshness (readonly=True): table expired=False, has_server_for_mode=True, table routers={IPv4Address(('localhost', 7687))} => True
+2024-10-24 11:30:26,387 - neo4j.pool - DEBUG - [#0000]  _: <POOL> using existing routing table RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=419722.093, ttl=300)
+2024-10-24 11:30:26,388 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire address, database='neo4j' address=IPv4Address(('localhost', 7687))
+2024-10-24 11:30:26,388 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-24 11:30:26,388 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-24 11:30:26,388 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-24 11:30:26,389 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-24 11:30:28,433 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-24 11:30:28,434 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-24 11:30:28,435 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-24 11:30:28,436 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-24 11:30:28,436 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-24 11:30:28,437 - neo4j.io - DEBUG - [#FF1C]  C: <MAGIC> 0x6060B017
+2024-10-24 11:30:28,438 - neo4j.io - DEBUG - [#FF1C]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-24 11:30:28,442 - neo4j.io - DEBUG - [#FF1C]  S: <HANDSHAKE> 0x00000605
+2024-10-24 11:30:28,443 - neo4j.io - DEBUG - [#FF1C]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-24 11:30:28,444 - neo4j.io - DEBUG - [#FF1C]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:28,445 - neo4j.io - DEBUG - [#FF1C]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-24 11:30:28,445 - neo4j.io - DEBUG - [#FF1C]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-24 11:30:28,447 - neo4j.io - DEBUG - [#FF1C]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-7', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-24 11:30:28,447 - neo4j.io - DEBUG - [#FF1C]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:28,449 - neo4j.io - DEBUG - [#FF1C]  S: SUCCESS {}
+2024-10-24 11:30:28,449 - neo4j.io - DEBUG - [#FF1C]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-24 11:30:28,449 - neo4j.pool - DEBUG - [#FF1C]  _: <POOL> released bolt-7
+2024-10-24 11:30:28,453 - uvicorn.error - INFO - Started server process [27060]
+2024-10-24 11:30:28,453 - uvicorn.error - INFO - Waiting for application startup.
+2024-10-24 11:30:28,454 - uvicorn.error - INFO - Application startup complete.
+2024-10-24 11:30:28,455 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2024-10-24 11:30:31,566 - uvicorn.access - INFO - 127.0.0.1:65314 - "GET /docs HTTP/1.1" 200
+2024-10-24 11:30:31,746 - uvicorn.access - INFO - 127.0.0.1:65314 - "GET /openapi.json HTTP/1.1" 200
+2024-10-24 11:30:37,243 - neo4j.pool - DEBUG - [#0000]  _: <POOL> created, routing address IPv4Address(('localhost', 7687))
+2024-10-24 11:30:37,245 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire routing connection, access_mode='WRITE', database='neo4j'
+2024-10-24 11:30:37,245 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> checking table freshness (readonly=False): table expired=True, has_server_for_mode=False, table routers={IPv4Address(('localhost', 7687))} => False
+2024-10-24 11:30:37,246 - neo4j.pool - DEBUG - [#0000]  _: <POOL> attempting to update routing table from IPv4Address(('localhost', 7687))
+2024-10-24 11:30:37,247 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-24 11:30:37,247 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-24 11:30:37,249 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database='neo4j', address=ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-24 11:30:37,249 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-24 11:30:37,249 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-24 11:30:39,299 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-24 11:30:39,300 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-24 11:30:39,300 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-24 11:30:39,301 - neo4j.pool - DEBUG - [#0000]  _: <POOL> deactivating address ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-24 11:30:39,302 - neo4j.pool - DEBUG - [#0000]  _: <POOL> table={'neo4j': RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={}, writers={}, last_updated_time=419732.953, ttl=0)}
+2024-10-24 11:30:39,302 - neo4j.pool - DEBUG - [#0000]  _: <POOL> failed to fetch routing info from ResolvedIPv6Address(('::1', 7687, 0, 0))
+2024-10-24 11:30:39,303 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-24 11:30:39,303 - neo4j.pool - DEBUG - [#0000]  _: <POOL> _acquire router connection, database='neo4j', address=ResolvedIPv4Address(('127.0.0.1', 7687))
+2024-10-24 11:30:39,303 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-24 11:30:39,304 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-24 11:30:39,305 - neo4j.io - DEBUG - [#FF30]  C: <MAGIC> 0x6060B017
+2024-10-24 11:30:39,305 - neo4j.io - DEBUG - [#FF30]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-24 11:30:39,307 - neo4j.io - DEBUG - [#FF30]  S: <HANDSHAKE> 0x00000605
+2024-10-24 11:30:39,307 - neo4j.io - DEBUG - [#FF30]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-24 11:30:39,308 - neo4j.io - DEBUG - [#FF30]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:39,309 - neo4j.io - DEBUG - [#FF30]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-24 11:30:39,309 - neo4j.io - DEBUG - [#FF30]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-24 11:30:39,312 - neo4j.io - DEBUG - [#FF30]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-8', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-24 11:30:39,312 - neo4j.io - DEBUG - [#FF30]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:39,313 - neo4j.io - DEBUG - [#FF30]  S: SUCCESS {}
+2024-10-24 11:30:39,313 - neo4j.io - DEBUG - [#FF30]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-24 11:30:39,313 - neo4j.io - DEBUG - [#FF30]  C: ROUTE {'address': 'localhost:7687'} () {'db': 'neo4j'}
+2024-10-24 11:30:39,315 - neo4j.io - DEBUG - [#FF30]  S: SUCCESS {'rt': {'servers': [{'addresses': ['localhost:7687'], 'role': 'WRITE'}, {'addresses': ['localhost:7687'], 'role': 'READ'}, {'addresses': ['localhost:7687'], 'role': 'ROUTE'}], 'ttl': 300, 'db': 'neo4j'}}
+2024-10-24 11:30:39,316 - neo4j.pool - DEBUG - [#FF30]  _: <POOL> released bolt-8
+2024-10-24 11:30:39,317 - neo4j.pool - DEBUG - [#0000]  _: <ROUTING> updated table=RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=419735.015, ttl=300)
+2024-10-24 11:30:39,318 - neo4j.pool - DEBUG - [#0000]  _: <POOL> update routing table from address=ResolvedIPv4Address(('127.0.0.1', 7687)) (RoutingTable(database='neo4j', routers={IPv4Address(('localhost', 7687))}, readers={IPv4Address(('localhost', 7687))}, writers={IPv4Address(('localhost', 7687))}, last_updated_time=419735.015, ttl=300))
+2024-10-24 11:30:39,319 - neo4j.pool - DEBUG - [#0000]  _: <POOL> acquire address, database='neo4j' address=IPv4Address(('localhost', 7687))
+2024-10-24 11:30:39,319 - neo4j.pool - DEBUG - [#0000]  _: <POOL> trying to hand out new connection
+2024-10-24 11:30:39,320 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> in: localhost:7687
+2024-10-24 11:30:39,321 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: [::1]:7687
+2024-10-24 11:30:39,321 - neo4j.io - DEBUG - [#0000]  C: <OPEN> [::1]:7687
+2024-10-24 11:30:41,361 - neo4j.io - DEBUG - [#0000]  S: <ERROR> ConnectionRefusedError 10061 'No connection could be made because the target machine actively refused it' None 10061 None
+2024-10-24 11:30:41,361 - neo4j.io - DEBUG - [#0000]  C: <CLOSE> [::1]:7687
+2024-10-24 11:30:41,362 - neo4j.io - DEBUG - [#0000]  S: <CONNECTION FAILED> ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2024-10-24 11:30:41,362 - neo4j.io - DEBUG - [#0000]  _: <RESOLVE> dns resolver out: 127.0.0.1:7687
+2024-10-24 11:30:41,363 - neo4j.io - DEBUG - [#0000]  C: <OPEN> 127.0.0.1:7687
+2024-10-24 11:30:41,363 - neo4j.io - DEBUG - [#FF32]  C: <MAGIC> 0x6060B017
+2024-10-24 11:30:41,365 - neo4j.io - DEBUG - [#FF32]  C: <HANDSHAKE> 0x00060605 0x00020404 0x00000104 0x00000003
+2024-10-24 11:30:41,366 - neo4j.io - DEBUG - [#FF32]  S: <HANDSHAKE> 0x00000605
+2024-10-24 11:30:41,366 - neo4j.io - DEBUG - [#FF32]  C: HELLO {'user_agent': 'neo4j-python/5.25.0 Python/3.12.4-final-0 (win32)', 'routing': {'address': 'localhost:7687'}, 'bolt_agent': {'product': 'neo4j-python/5.25.0', 'platform': 'Windows 11; AMD64', 'language': 'Python/3.12.4-final-0', 'language_details': 'CPython; 3.12.4-final-0 (tags/v3.12.4:8e8a4ba, Jun  6 2024 19:30:16) [MSC v.1940 64 bit (AMD64)]'}}
+2024-10-24 11:30:41,367 - neo4j.io - DEBUG - [#FF32]  _: <CONNECTION> client state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:41,367 - neo4j.io - DEBUG - [#FF32]  C: LOGON {'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+2024-10-24 11:30:41,367 - neo4j.io - DEBUG - [#FF32]  _: <CONNECTION> client state: AUTHENTICATION > READY
+2024-10-24 11:30:41,369 - neo4j.io - DEBUG - [#FF32]  S: SUCCESS {'server': 'Neo4j/5.23.0', 'connection_id': 'bolt-9', 'hints': {'connection.recv_timeout_seconds': 120}}
+2024-10-24 11:30:41,377 - neo4j.io - DEBUG - [#FF32]  _: <CONNECTION> server state: CONNECTED > AUTHENTICATION
+2024-10-24 11:30:41,377 - neo4j.io - DEBUG - [#FF32]  S: SUCCESS {}
+2024-10-24 11:30:41,377 - neo4j.io - DEBUG - [#FF32]  _: <CONNECTION> server state: AUTHENTICATION > READY
+2024-10-24 11:30:41,378 - neo4j.io - DEBUG - [#FF32]  C: RUN "// Step 1: Collect all regimens for the new patient (including historical)\nMATCH (new_vh:vaccine_history)\noptional match (new_vh)-[new_hre:has_regimen]->(new_re:regimen)\nWITH new_vh.lcv_id AS new_lcv_id, COLLECT(new_re.regimen_id) AS new_patient_regimens\nWHERE new_vh.lcv_id = $new_lcv_id\n// Step 2: Find patients with the same regimens\nMATCH (vh:vaccine_history)-[hre:has_regimen]->(re:regimen)\nMATCH (re)-[vsr:regimen_includes_vaccine]->(vs:vaccine_shot)\nMATCH (vh)-[vac:vaccinated_date]->(vs)\nwith vh.lcv_id AS lcv_id, COLLECT(re.regimen_id) AS regimens, new_lcv_id, new_patient_regimens\nWHERE ALL(regimen IN new_patient_regimens WHERE regimen IN regimens)\nAND new_lcv_id <> lcv_id\n// Step 3: Fetch the latest and earliest shot for each regimen and categorize\nWITH lcv_id, new_patient_regimens, new_lcv_id\nMATCH (vh:vaccine_history {lcv_id: lcv_id})-[hre:has_regimen]->(re:regimen)\nMATCH (re)-[vsr:regimen_includes_vaccine]->(vs:vaccine_shot)\nMATCH (vh)-[vac:vaccinated_date]->(vs)\nWHERE re.regimen_id IN $regimenids OR re.regimen_id IN new_patient_regimens\nWITH vh.lcv_id AS lcv_id,new_lcv_id, re.regimen_id AS regimen_id, vs.sku AS vaccine_sku,\n    date(MAX(vac.value)) AS last_vaccine_date, date(MIN(vac.value)) AS first_vaccine_date,\n    (re.regimen_id IN $regimenids) AS is_required_shot\nORDER BY regimen_id\n// Step 4: Separate rows for cross join\nWITH lcv_id, regimen_id,new_lcv_id, vaccine_sku, last_vaccine_date, first_vaccine_date, is_required_shot\nWITH lcv_id,new_lcv_id, COLLECT({\n    regimen_id: regimen_id,\n    vaccine_sku: vaccine_sku,\n    last_vaccine_date: last_vaccine_date,\n    first_vaccine_date: first_vaccine_date\n}) AS required_shots, COLLECT(\n    CASE WHEN is_required_shot <> TRUE THEN {\n        regimen_id: regimen_id,\n        vaccine_sku: vaccine_sku,\n        last_vaccine_date: last_vaccine_date,\n        first_vaccine_date: first_vaccine_date\n    } ELSE \n    {\n        regimen_id: regimen_id,\n        vaccine_sku: vaccine_sku,\n        last_vaccine_date: date('9999-01-01'),\n        first_vaccine_date: date('9999-01-01')\n    }\n    END\n) AS other_shots\nUNWIND required_shots AS req_shot\nWITH new_lcv_id,lcv_id,req_shot, other_shots\nUNWIND other_shots AS oth_shot\nwith new_lcv_id,lcv_id,req_shot, oth_shot, duration.between(oth_shot.last_vaccine_date, req_shot.first_vaccine_date) AS date_diff\nWHERE 1=1\nor (date_diff.years > 0 OR date_diff.months > 0 OR date_diff.days > 0)\n or date_diff.years < 0\n\n\n// Step 6: Get the max date_diff for each required_regimen\nWITH lcv_id,req_shot.regimen_id AS required_regimen_id, req_shot.vaccine_sku as required_vaccine_sku,\n    MAX(date_diff) AS max_date_diff, COLLECT({\n        other_regimen_id: oth_shot.regimen_id,\n        date_diff: date_diff\n    }) AS oth_shot_details\n\n// Step 7: Extract the other regimen with the max date_diff\nWITH lcv_id,required_regimen_id, required_vaccine_sku, max_date_diff,\n    [oth IN oth_shot_details WHERE oth.date_diff = max_date_diff][0] AS max_diff_details\n\nwith lcv_id,required_regimen_id, required_vaccine_sku, max_diff_details.other_regimen_id AS other_regimen_id, max_date_diff\n\n// Step 8: Apply max date_diff to new_patient's respective regimens\nMATCH (new_vh:vaccine_history{lcv_id:$new_lcv_id })\noptional match (new_vh)-[new_hre:has_regimen]->(new_re:regimen)\noptional MATCH (new_re)-[vsr:regimen_includes_vaccine]->(vs:vaccine_shot)\noptional MATCH (new_vh)-[vac:vaccinated_date]->(vs)\nWHERE new_vh.lcv_id = $new_lcv_id \nand required_regimen_id in $regimenids\nwith DISTINCT lcv_id as match_lcv_id,new_vh.lcv_id AS new_lcv_id, required_regimen_id AS required_regimen_id, required_vaccine_sku,\n    date(MAX(vac.value)) + max_date_diff AS suggested_date, max_date_diff AS days_between\nwith match_lcv_id,new_lcv_id,required_regimen_id,required_vaccine_sku,suggested_date,days_between\nwhere required_regimen_id in $regimenids\n// Combined final step to use dynamically derived lists\nMATCH (vh:vaccine_history)-[hre:has_regimen]->(re:regimen)\nWHERE re.regimen_id IN required_regimen_id and vh.lcv_id = match_lcv_id\nwith \n    vh.lcv_id AS lcv_id, COLLECT(re.regimen_id) AS regimens, \n    COLLECT(required_regimen_id) AS regimenids, \n    COLLECT(required_vaccine_sku) AS vaccineskus, \n    COLLECT(suggested_date) AS suggested_date\n \n// Match to determine if the new patient has the history\nMATCH (vh:vaccine_history {lcv_id: $new_lcv_id})\noptional match (vh) - [rer:has_regimen] -> (re:regimen)\nwith lcv_id, regimenids, suggested_date, vaccineskus, \n    COUNT(re) > 0 AS has_history\n// Use CASE to assign based on whether the history exists\nWITH lcv_id, \n    CASE WHEN has_history THEN regimenids ELSE $regimenids END AS regimenids,\n    CASE WHEN has_history THEN suggested_date ELSE $start_dates END AS suggested_date,\n    CASE WHEN has_history THEN vaccineskus ELSE $vaccineskus END AS vaccineskus\nWITH lcv_id, regimenids as regimenids,suggested_date,vaccineskus\n\n\nUNWIND range(0, size(regimenids) - 1) AS i\nMATCH (re:regimen {regimen_id: regimenids[i]})-[r:regimen_includes_vaccine]->(vs:vaccine_shot {sku: vaccineskus[i]})\nMATCH (vh:vaccine_history {lcv_id: lcv_id})-[hre:has_regimen]->(re)\nMATCH (vh)-[vac:vaccinated_date]->(vs)\nOPTIONAL MATCH (vs)-[ti:has_time_interval]->(vs2:vaccine_shot)\nWHERE ti.lcv_id = lcv_id AND (vs2.sku in vaccineskus)\nwith\n    vac.value AS vac1_createddt,\n    vs.sku AS vac1_nm,\n    vs.injection_order AS vac1_injection_order,\n    CASE\n        WHEN vs.injection_order = 1 THEN date(suggested_date[i])\n        ELSE NULL\n    END AS vac1_preferred_start_date,\n    CASE\n        WHEN vs2 IS NOT NULL THEN vs2.injection_order\n        ELSE NULL\n    END AS vac2_injection_order,\n    CASE\n        WHEN vs2 IS NOT NULL THEN vs2.sku\n        ELSE NULL\n    END AS vac2_nm,\n    lcv_id,\n    COALESCE(ti.value, 0) AS days_between,\n    regimenids[i] AS current_regimen\nORDER BY lcv_id, vac1_createddt,COALESCE(ti.value, 0), vac1_injection_order\n\n\nWITH\n    collect({\n        vac1_createddt: vac1_createddt,\n        regimenid: current_regimen,\n        vac1_nm: vac1_nm,\n        vac1_injection_order: vac1_injection_order,\n        vac2_nm: vac2_nm,\n        vac2_injection_order: vac2_injection_order,\n        lcv_id: lcv_id,\n        days_between: days_between,\n        vac1_preferred_start_date: vac1_preferred_start_date\n    }) AS rows,\n    lcv_id\n\nUNWIND range(0, size(rows) - 1) AS idx\n\nWITH\n    rows[idx].vac1_createddt AS vac1_createddt,\n    lcv_id,\n    rows[idx].regimenid AS regimenid,\n    rows[idx].vac1_nm AS vac1_nm,\n    rows[idx].vac1_injection_order AS vac1_injection_order,\n    rows[idx].vac2_nm AS vac2_nm,\n    rows[idx].vac2_injection_order AS vac2_injection_order,\n    rows[idx].days_between AS days_between,\n    rows[idx].vac1_preferred_start_date AS vac1_preferred_start_date,\n    idx + 1 AS row_num,\n    CASE \n        WHEN idx = 0 THEN 0 \n        ELSE REDUCE(s = 0, j IN range(0, idx) | s + rows[j-1].days_between) \n    END AS cumulative_days,\n    CASE \n        WHEN rows[idx].vac1_preferred_start_date is not null THEN rows[idx].vac1_preferred_start_date\n        ELSE rows[idx-1].vac1_preferred_start_date\n    END AS vac1_preferred_start_date_v2,\n    rows,\n    idx\n\nWITH\n    rows,\n    CASE\n        WHEN rows[idx].vac1_preferred_start_date is not null THEN date(rows[idx].vac1_preferred_start_date)\n        ELSE COALESCE(\n                COALESCE(\n                    date(rows[idx-1].vac1_preferred_start_date),\n                    date($start_dates[apoc.coll.min([SIZE($start_dates) - 1, idx - 1])]) \n                    ) + duration({days: rows[idx-1].days_between}),\n                    CASE WHEN idx = 0 THEN date($start_dates[0]) ELSE date($start_dates[0])+ duration({days: cumulative_days})\n                     end) \n    END AS current_start_day,\n    vac1_createddt,\n    regimenid,\n    vac1_nm,\n    vac1_injection_order,\n    vac2_injection_order,\n    vac2_nm,\n    lcv_id,\n    days_between,\n    idx,\n    vac1_preferred_start_date,\n    cumulative_days\n// where vac2_nm is not null\n\n// Continue from the collected data\nWITH \n    cumulative_days,\n    current_start_day,\n    vac1_createddt,\n    regimenid,\n    vac1_nm,\n    vac1_injection_order,\n    vac2_nm,\n    vac2_injection_order,\n    lcv_id,\n    days_between,\n    idx\n\n// Ensure the patient has taken all the specified regimens/vaccines\nMATCH (vh:vaccine_history {lcv_id: lcv_id})-[hre:has_regimen]->(re:regimen)\nWHERE re.regimen_id IN $regimenids\nWITH vh.lcv_id AS lcv_id, COLLECT(re.regimen_id) AS regimens, \n    cumulative_days, current_start_day, vac1_createddt, regimenid, vac1_nm, vac1_injection_order, vac2_nm, vac2_injection_order, days_between, idx\n\n// Filter to ensure all regimens are included\nWHERE ALL(regimen IN $regimenids WHERE regimen IN regimens) AND SIZE(regimens) = SIZE($regimenids)\nwith \n    cumulative_days,\n    current_start_day,\n    vac1_createddt,\n    regimenid,\n    vac1_nm,\n    vac1_injection_order,\n    vac2_nm,\n    vac2_injection_order,\n    lcv_id,\n    days_between,\n    idx\n\n\n    // Match the patient and their profile\n    MATCH (p1:person {lcv_id: lcv_id})-[:has_profile]->(profile1:profile)\n    // Match other patients with the same regimen\n    MATCH (p2:person)-[:has_profile]->(profile2:profile)\n    WHERE p2.lcv_id <> lcv_id\n    WITH *\n    OPTIONAL MATCH (profile1)-[:has_gender]->(gender1:gender)\n    OPTIONAL MATCH (profile1)-[:born_on]->(dob1:dateofbirth)\n    OPTIONAL MATCH (profile1)-[:has_city]->(city1:city)\n    OPTIONAL MATCH (profile1)-[:has_province]->(province1:province)\n    OPTIONAL MATCH (p1)-[:has_vaccine_history]->(:vaccine_history)-[:vaccinated_date]->(vaccine1:Vaccine)\n    WITH *\n    OPTIONAL MATCH (profile2)-[:has_gender]->(gender2:gender)\n    OPTIONAL MATCH (profile2)-[:born_on]->(dob2:dateofbirth)\n    OPTIONAL MATCH (profile2)-[:has_city]->(city2:city)\n    OPTIONAL MATCH (profile2)-[:has_province]->(province2:province)\n    OPTIONAL MATCH (p2)-[:has_vaccine_history]->(:vaccine_history)-[:vaccinated_date]->(vaccine2:Vaccine)\n\n    WITH *, \n        CASE WHEN gender1.value = gender2.value THEN 1 ELSE 0 END AS genderMatch, \n        CASE WHEN dob1.value = dob2.value THEN 1 ELSE 0 END AS dobMatch, \n        CASE WHEN city1.value = city2.value THEN 1 ELSE 0 END AS cityMatch, \n        CASE WHEN province1.value = province2.value THEN 1 ELSE 0 END AS provinceMatch\n\n    // Calculate total similarity score\n    WITH *, \n        COALESCE(genderMatch, 0) + COALESCE(dobMatch, 0) + COALESCE(cityMatch, 0) + COALESCE(provinceMatch, 0) AS similarityScore\n\n    // // Calculate dates for each shot\n    // WITH *, \n    //     CASE \n    //         WHEN vac1_injection_order = 1 THEN date($start_date)\n    //         WHEN vac1_injection_order > 1 THEN date($start_date) + duration({days: COALESCE(days_between, 0)}) \n    //         ELSE NULL \n    //     END AS shot_date\n\n    RETURN \n        //vac1_createddt, \n        regimenid as regimen_id, \n        vac1_nm as vaccine_sku, \n        vac1_injection_order as vaccine_shot_injection_order, \n        //vac2_nm, \n        //vac2_injection_order, \n        lcv_id, \n        days_between, \n        current_start_day as recommended_date, \n        MAX(similarityScore) AS similarityScore\n    ORDER BY lcv_id, current_start_day\n\n\n\n" {'vaccineskus': ['HEXAXIM', 'ROTATEQ 2ML'], 'regimenids': ['regimen 1', 'regimen 2'], 'new_lcv_id': 8, 'start_dates': ['2024-10-24', '2024-10-24']} {'db': 'neo4j'}
+2024-10-24 11:30:41,393 - neo4j.io - DEBUG - [#FF32]  _: <CONNECTION> client state: READY > STREAMING
+2024-10-24 11:30:41,393 - neo4j.io - DEBUG - [#FF32]  C: PULL {'n': 1000}
+2024-10-24 11:30:44,056 - neo4j.io - DEBUG - [#FF32]  S: SUCCESS {'t_first': 2661, 'fields': ['regimen_id', 'vaccine_sku', 'vaccine_shot_injection_order', 'lcv_id', 'days_between', 'recommended_date', 'similarityScore']}
+2024-10-24 11:30:44,058 - neo4j.io - DEBUG - [#FF32]  _: <CONNECTION> server state: READY > STREAMING
+2024-10-24 11:30:44,279 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,279 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,281 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,281 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,281 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,282 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,282 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,283 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,283 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,283 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,284 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,284 - neo4j.io - DEBUG - [#FF32]  S: RECORD * 1
+2024-10-24 11:30:44,285 - neo4j.io - DEBUG - [#FF32]  S: SUCCESS {'bookmark': 'FB:kcwQE2oG8jXCTaSquhio77KcK8kBkJA=', 'statuses': [{'gql_status': '00000', 'status_description': 'note: successful completion'}], 'type': 'r', 't_last': 219, 'db': 'neo4j'}
+2024-10-24 11:30:44,285 - neo4j.io - DEBUG - [#FF32]  _: <CONNECTION> server state: STREAMING > READY
+2024-10-24 11:30:44,286 - neo4j.pool - DEBUG - [#FF32]  _: <POOL> released bolt-9
+2024-10-24 11:30:44,287 - uvicorn.access - INFO - 127.0.0.1:65313 - "POST /recommend HTTP/1.1" 200
+2024-10-24 11:30:50,451 - uvicorn.error - INFO - Shutting down
+2024-10-24 11:30:50,552 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-10-24 11:30:50,552 - uvicorn.error - INFO - Application shutdown complete.
+2024-10-24 11:30:50,552 - uvicorn.error - INFO - Finished server process [27060]
+2024-10-24 11:30:50,577 - neo4j.pool - DEBUG - [#0000]  _: <POOL> close
+2024-10-24 11:30:50,577 - neo4j.io - DEBUG - [#FF30]  C: GOODBYE
+2024-10-24 11:30:50,577 - neo4j.io - DEBUG - [#FF30]  C: <CLOSE>
+2024-10-24 11:30:50,577 - neo4j.io - DEBUG - [#FF32]  C: GOODBYE
+2024-10-24 11:30:50,579 - neo4j.io - DEBUG - [#FF32]  C: <CLOSE>

@@ -1,0 +1,277 @@
+// Step 1: Collect all regimens for the new patient (including historical)
+MATCH (new_vh:vaccine_history)
+optional match (new_vh)-[new_hre:has_regimen]->(new_re:regimen)
+WITH new_vh.lcv_id AS new_lcv_id, COLLECT(new_re.regimen_id) AS new_patient_regimens
+WHERE new_vh.lcv_id = $new_lcv_id
+// Step 2: Find patients with the same regimens
+MATCH (vh:vaccine_history)-[hre:has_regimen]->(re:regimen)
+MATCH (re)-[vsr:regimen_includes_vaccine]->(vs:vaccine_shot)
+MATCH (vh)-[vac:vaccinated_date]->(vs)
+with vh.lcv_id AS lcv_id, COLLECT(re.regimen_id) AS regimens, new_lcv_id, new_patient_regimens
+WHERE ALL(regimen IN new_patient_regimens WHERE regimen IN regimens)
+AND new_lcv_id <> lcv_id
+// Step 3: Fetch the latest and earliest shot for each regimen and categorize
+WITH lcv_id, new_patient_regimens, new_lcv_id
+MATCH (vh:vaccine_history {lcv_id: lcv_id})-[hre:has_regimen]->(re:regimen)
+MATCH (re)-[vsr:regimen_includes_vaccine]->(vs:vaccine_shot)
+MATCH (vh)-[vac:vaccinated_date]->(vs)
+WHERE re.regimen_id IN $regimenids OR re.regimen_id IN new_patient_regimens
+WITH vh.lcv_id AS lcv_id,new_lcv_id, re.regimen_id AS regimen_id, vs.sku AS vaccine_sku,
+    date(MAX(vac.value)) AS last_vaccine_date, date(MIN(vac.value)) AS first_vaccine_date,
+    (re.regimen_id IN $regimenids) AS is_required_shot
+ORDER BY regimen_id
+// Step 4: Separate rows for cross join
+WITH lcv_id, regimen_id,new_lcv_id, vaccine_sku, last_vaccine_date, first_vaccine_date, is_required_shot
+WITH lcv_id,new_lcv_id, COLLECT({
+    regimen_id: regimen_id,
+    vaccine_sku: vaccine_sku,
+    last_vaccine_date: last_vaccine_date,
+    first_vaccine_date: first_vaccine_date
+}) AS required_shots, COLLECT(
+    CASE WHEN is_required_shot <> TRUE THEN {
+        regimen_id: regimen_id,
+        vaccine_sku: vaccine_sku,
+        last_vaccine_date: last_vaccine_date,
+        first_vaccine_date: first_vaccine_date
+    } ELSE 
+    {
+        regimen_id: regimen_id,
+        vaccine_sku: vaccine_sku,
+        last_vaccine_date: date('9999-01-01'),
+        first_vaccine_date: date('9999-01-01')
+    }
+    END
+) AS other_shots
+UNWIND required_shots AS req_shot
+WITH new_lcv_id,lcv_id,req_shot, other_shots
+UNWIND other_shots AS oth_shot
+with new_lcv_id,lcv_id,req_shot, oth_shot, duration.between(oth_shot.last_vaccine_date, req_shot.first_vaccine_date) AS date_diff
+WHERE 1=1
+or (date_diff.years > 0 OR date_diff.months > 0 OR date_diff.days > 0)
+ or date_diff.years < 0
+
+
+// Step 6: Get the max date_diff for each required_regimen
+WITH lcv_id,req_shot.regimen_id AS required_regimen_id, req_shot.vaccine_sku as required_vaccine_sku,
+    MAX(date_diff) AS max_date_diff, COLLECT({
+        other_regimen_id: oth_shot.regimen_id,
+        date_diff: date_diff
+    }) AS oth_shot_details
+
+// Step 7: Extract the other regimen with the max date_diff
+WITH lcv_id,required_regimen_id, required_vaccine_sku, max_date_diff,
+    [oth IN oth_shot_details WHERE oth.date_diff = max_date_diff][0] AS max_diff_details
+
+with lcv_id,required_regimen_id, required_vaccine_sku, max_diff_details.other_regimen_id AS other_regimen_id, max_date_diff
+
+// Step 8: Apply max date_diff to new_patient's respective regimens
+MATCH (new_vh:vaccine_history{lcv_id:$new_lcv_id })
+optional match (new_vh)-[new_hre:has_regimen]->(new_re:regimen)
+optional MATCH (new_re)-[vsr:regimen_includes_vaccine]->(vs:vaccine_shot)
+optional MATCH (new_vh)-[vac:vaccinated_date]->(vs)
+WHERE new_vh.lcv_id = $new_lcv_id 
+and required_regimen_id in $regimenids
+with DISTINCT lcv_id as match_lcv_id,new_vh.lcv_id AS new_lcv_id, required_regimen_id AS required_regimen_id, required_vaccine_sku,
+    date(MAX(vac.value)) + max_date_diff AS suggested_date, max_date_diff AS days_between
+with match_lcv_id,new_lcv_id,required_regimen_id,required_vaccine_sku,suggested_date,days_between
+where required_regimen_id in $regimenids
+// Combined final step to use dynamically derived lists
+MATCH (vh:vaccine_history)-[hre:has_regimen]->(re:regimen)
+WHERE re.regimen_id IN required_regimen_id and vh.lcv_id = match_lcv_id
+with 
+    vh.lcv_id AS lcv_id, COLLECT(re.regimen_id) AS regimens, 
+    COLLECT(required_regimen_id) AS regimenids, 
+    COLLECT(required_vaccine_sku) AS vaccineskus, 
+    COLLECT(suggested_date) AS suggested_date
+ 
+// Match to determine if the new patient has the history
+MATCH (vh:vaccine_history {lcv_id: $new_lcv_id})
+optional match (vh) - [rer:has_regimen] -> (re:regimen)
+with lcv_id, regimenids, suggested_date, vaccineskus, 
+    COUNT(re) > 0 AS has_history
+// Use CASE to assign based on whether the history exists
+WITH lcv_id, 
+    CASE WHEN has_history THEN regimenids ELSE $regimenids END AS regimenids,
+    CASE WHEN has_history THEN suggested_date ELSE $start_dates END AS suggested_date,
+    CASE WHEN has_history THEN vaccineskus ELSE $vaccineskus END AS vaccineskus
+WITH lcv_id, regimenids as regimenids,suggested_date,vaccineskus
+
+
+UNWIND range(0, size(regimenids) - 1) AS i
+MATCH (re:regimen {regimen_id: regimenids[i]})-[r:regimen_includes_vaccine]->(vs:vaccine_shot {sku: vaccineskus[i]})
+MATCH (vh:vaccine_history {lcv_id: lcv_id})-[hre:has_regimen]->(re)
+MATCH (vh)-[vac:vaccinated_date]->(vs)
+OPTIONAL MATCH (vs)-[ti:has_time_interval]->(vs2:vaccine_shot)
+WHERE ti.lcv_id = lcv_id AND (vs2.sku in vaccineskus)
+with
+    vac.value AS vac1_createddt,
+    vs.sku AS vac1_nm,
+    vs.injection_order AS vac1_injection_order,
+    CASE
+        WHEN vs.injection_order = 1 THEN date(suggested_date[i])
+        ELSE NULL
+    END AS vac1_preferred_start_date,
+    CASE
+        WHEN vs2 IS NOT NULL THEN vs2.injection_order
+        ELSE NULL
+    END AS vac2_injection_order,
+    CASE
+        WHEN vs2 IS NOT NULL THEN vs2.sku
+        ELSE NULL
+    END AS vac2_nm,
+    lcv_id,
+    COALESCE(ti.value, 0) AS days_between,
+    regimenids[i] AS current_regimen
+ORDER BY lcv_id, vac1_createddt,COALESCE(ti.value, 0), vac1_injection_order
+
+
+WITH
+    collect({
+        vac1_createddt: vac1_createddt,
+        regimenid: current_regimen,
+        vac1_nm: vac1_nm,
+        vac1_injection_order: vac1_injection_order,
+        vac2_nm: vac2_nm,
+        vac2_injection_order: vac2_injection_order,
+        lcv_id: lcv_id,
+        days_between: days_between,
+        vac1_preferred_start_date: vac1_preferred_start_date
+    }) AS rows,
+    lcv_id
+
+UNWIND range(0, size(rows) - 1) AS idx
+
+WITH
+    rows[idx].vac1_createddt AS vac1_createddt,
+    lcv_id,
+    rows[idx].regimenid AS regimenid,
+    rows[idx].vac1_nm AS vac1_nm,
+    rows[idx].vac1_injection_order AS vac1_injection_order,
+    rows[idx].vac2_nm AS vac2_nm,
+    rows[idx].vac2_injection_order AS vac2_injection_order,
+    rows[idx].days_between AS days_between,
+    rows[idx].vac1_preferred_start_date AS vac1_preferred_start_date,
+    idx + 1 AS row_num,
+    CASE 
+        WHEN idx = 0 THEN 0 
+        ELSE REDUCE(s = 0, j IN range(0, idx) | s + rows[j-1].days_between) 
+    END AS cumulative_days,
+    CASE 
+        WHEN rows[idx].vac1_preferred_start_date is not null THEN rows[idx].vac1_preferred_start_date
+        ELSE rows[idx-1].vac1_preferred_start_date
+    END AS vac1_preferred_start_date_v2,
+    rows,
+    idx
+
+WITH
+    rows,
+    CASE
+        WHEN rows[idx].vac1_preferred_start_date is not null THEN date(rows[idx].vac1_preferred_start_date)
+        ELSE COALESCE(
+                COALESCE(
+                    date(rows[idx-1].vac1_preferred_start_date),
+                    date($start_dates[apoc.coll.min([SIZE($start_dates) - 1, idx - 1])]) 
+                    ) + duration({days: rows[idx-1].days_between}),
+                    CASE WHEN idx = 0 THEN date($start_dates[0]) ELSE date($start_dates[0])+ duration({days: cumulative_days})
+                     end) 
+    END AS current_start_day,
+    vac1_createddt,
+    regimenid,
+    vac1_nm,
+    vac1_injection_order,
+    vac2_injection_order,
+    vac2_nm,
+    lcv_id,
+    days_between,
+    idx,
+    vac1_preferred_start_date,
+    cumulative_days
+// where vac2_nm is not null
+
+// Continue from the collected data
+WITH 
+    cumulative_days,
+    current_start_day,
+    vac1_createddt,
+    regimenid,
+    vac1_nm,
+    vac1_injection_order,
+    vac2_nm,
+    vac2_injection_order,
+    lcv_id,
+    days_between,
+    idx
+
+// Ensure the patient has taken all the specified regimens/vaccines
+MATCH (vh:vaccine_history {lcv_id: lcv_id})-[hre:has_regimen]->(re:regimen)
+WHERE re.regimen_id IN $regimenids
+WITH vh.lcv_id AS lcv_id, COLLECT(re.regimen_id) AS regimens, 
+    cumulative_days, current_start_day, vac1_createddt, regimenid, vac1_nm, vac1_injection_order, vac2_nm, vac2_injection_order, days_between, idx
+
+// Filter to ensure all regimens are included
+WHERE ALL(regimen IN $regimenids WHERE regimen IN regimens) AND SIZE(regimens) = SIZE($regimenids)
+with 
+    cumulative_days,
+    current_start_day,
+    vac1_createddt,
+    regimenid,
+    vac1_nm,
+    vac1_injection_order,
+    vac2_nm,
+    vac2_injection_order,
+    lcv_id,
+    days_between,
+    idx
+
+
+    // Match the patient and their profile
+    MATCH (p1:person {lcv_id: lcv_id})-[:has_profile]->(profile1:profile)
+    // Match other patients with the same regimen
+    MATCH (p2:person)-[:has_profile]->(profile2:profile)
+    WHERE p2.lcv_id <> lcv_id
+    WITH *
+    OPTIONAL MATCH (profile1)-[:has_gender]->(gender1:gender)
+    OPTIONAL MATCH (profile1)-[:born_on]->(dob1:dateofbirth)
+    OPTIONAL MATCH (profile1)-[:has_city]->(city1:city)
+    OPTIONAL MATCH (profile1)-[:has_province]->(province1:province)
+    OPTIONAL MATCH (p1)-[:has_vaccine_history]->(:vaccine_history)-[:vaccinated_date]->(vaccine1:Vaccine)
+    WITH *
+    OPTIONAL MATCH (profile2)-[:has_gender]->(gender2:gender)
+    OPTIONAL MATCH (profile2)-[:born_on]->(dob2:dateofbirth)
+    OPTIONAL MATCH (profile2)-[:has_city]->(city2:city)
+    OPTIONAL MATCH (profile2)-[:has_province]->(province2:province)
+    OPTIONAL MATCH (p2)-[:has_vaccine_history]->(:vaccine_history)-[:vaccinated_date]->(vaccine2:Vaccine)
+
+    WITH *, 
+        CASE WHEN gender1.value = gender2.value THEN 1 ELSE 0 END AS genderMatch, 
+        CASE WHEN dob1.value = dob2.value THEN 1 ELSE 0 END AS dobMatch, 
+        CASE WHEN city1.value = city2.value THEN 1 ELSE 0 END AS cityMatch, 
+        CASE WHEN province1.value = province2.value THEN 1 ELSE 0 END AS provinceMatch
+
+    // Calculate total similarity score
+    WITH *, 
+        COALESCE(genderMatch, 0) + COALESCE(dobMatch, 0) + COALESCE(cityMatch, 0) + COALESCE(provinceMatch, 0) AS similarityScore
+
+    // // Calculate dates for each shot
+    // WITH *, 
+    //     CASE 
+    //         WHEN vac1_injection_order = 1 THEN date($start_date)
+    //         WHEN vac1_injection_order > 1 THEN date($start_date) + duration({days: COALESCE(days_between, 0)}) 
+    //         ELSE NULL 
+    //     END AS shot_date
+
+    RETURN 
+        //vac1_createddt, 
+        regimenid as regimen_id, 
+        vac1_nm as vaccine_sku, 
+        vac1_injection_order as vaccine_shot_injection_order, 
+        //vac2_nm, 
+        //vac2_injection_order, 
+        lcv_id, 
+        days_between, 
+        current_start_day as recommended_date, 
+        MAX(similarityScore) AS similarityScore
+    ORDER BY lcv_id, current_start_day
+
+
+

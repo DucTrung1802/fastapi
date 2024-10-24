@@ -2,8 +2,8 @@ from datetime import datetime
 from neo4j import GraphDatabase
 from collections import defaultdict
 
+from ..utils.logging import log
 from ..utils.exceptions import BadRequestException
-
 from ..config import configuration, environment
 from ..models.recommendModels import *
 
@@ -26,7 +26,7 @@ class Neo4jConnection:
                 # Immediately collect all records to prevent ResultConsumedError
                 return [dict(record) for record in result]
             except Exception as e:
-                print(f"Query failed: {e}")
+                log(f"Query failed: {e}")
                 return []
 
     def close(self):
@@ -142,7 +142,7 @@ def transform_to_models(data: List[dict]) -> List[RecommendationResponse]:
 
 async def recommend(request: RecommendationRequest):
     neo4j_conn = Neo4jConnection(
-        configuration.NEO4J_DB_URI,
+        environment.NEO4J_DB_URI,
         environment.NEO4J_DB_USERNAME,
         environment.NEO4J_DB_PASSWORD,
     )
