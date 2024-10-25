@@ -61,6 +61,18 @@ async def password_not_valid_exception_handler(
     )
 
 
+async def neo4j_connection_error_exception_handler(
+    request: Request, exception: Neo4jConnectionErrorException
+):
+    # Add more handlers here
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={
+            "message": f"Failed to connect to the Neo4j database. Please try again later."
+        },
+    )
+
+
 # Exception - Exception Handler mappings
 ExceptionHandlerMapping: List[Tuple[type, Callable]] = [
     (Exception, generic_exception_handler),
@@ -68,4 +80,5 @@ ExceptionHandlerMapping: List[Tuple[type, Callable]] = [
     (UnauthorizedException, unauthorized_exception_handler),
     (EmailNotValidException, email_not_valid_exception_handler),
     (PasswordNotValidException, password_not_valid_exception_handler),
+    (Neo4jConnectionErrorException, neo4j_connection_error_exception_handler),
 ]

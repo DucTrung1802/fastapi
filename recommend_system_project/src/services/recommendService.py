@@ -1,10 +1,11 @@
 from datetime import datetime
+import os
 from neo4j import GraphDatabase
 from collections import defaultdict
 
 from ..utils.logging import log
-from ..utils.exceptions import BadRequestException
-from ..config import configuration, environment
+from ..utils.exceptions import BadRequestException, Neo4jConnectionErrorException
+from ..config import environment
 from ..models.recommendModels import *
 
 
@@ -163,7 +164,7 @@ async def recommend(request: RecommendationRequest):
         start_dates.append(datetime.today().date().isoformat())
 
     query = ""
-    with open("query.txt", "r") as file:
+    with open(os.path.join("src", "queries", "recommend_query.txt"), "r") as file:
         query = file.read()
 
     parameters = {
@@ -173,7 +174,10 @@ async def recommend(request: RecommendationRequest):
         "start_dates": start_dates,
     }
 
-    result = neo4j_conn.query(query, parameters, db=target_database)
+    try:
+        result = neo4j_conn.query(query, parameters, db=target_database)
+    except:
+        raise Neo4jConnectionErrorException
 
     response = transform_to_models(transform_data(result))
 

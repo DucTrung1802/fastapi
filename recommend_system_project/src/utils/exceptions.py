@@ -23,3 +23,8 @@ class EmailNotValidException(Exception):
 class PasswordNotValidException(Exception):
     def __init__(self):
         pass
+
+
+class Neo4jConnectionErrorException(Exception):
+    def __init__(self):
+        pass
